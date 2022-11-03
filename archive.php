@@ -7,12 +7,11 @@ use AcSort;
 use Psr\Cache\InvalidArgumentException;
 use SortLink;
 use VisitMarche\Theme\Inc\CategoryMetaBox;
-use VisitMarche\Theme\Lib\RouterPivot;
 use VisitMarche\Theme\Lib\LocaleHelper;
 use VisitMarche\Theme\Lib\PostUtils;
+use VisitMarche\Theme\Lib\RouterPivot;
 use VisitMarche\Theme\Lib\Twig;
 use VisitMarche\Theme\Lib\WpRepository;
-use VisitMarche\Theme\Lib\Elasticsearch\Searcher;
 
 get_header();
 
@@ -54,7 +53,6 @@ if ($icone) {
 $children = $wpRepository->getChildrenOfCategory($category->cat_ID);
 $filtres = $wpRepository->getCategoryFilters($cat_ID);
 
-
 if ([] !== $filtres) {
     $filtres = RouterPivot::setRoutesToFilters($filtres, $cat_ID);
     $pivotRepository = PivotContainer::getPivotRepository(WP_DEBUG);
@@ -79,6 +77,7 @@ if ([] !== $filtres) {
 }
 $image = 'https://visitmarche.be/wp-content/themes/visitmarche/assets/tartine/rsc/img/bg_inspirations.png';
 $sortLink = SortLink::linkSortArticles($cat_ID);
+
 Twig::rendPage(
     '@VisitTail/category.html.twig',
     [
@@ -88,8 +87,10 @@ Twig::rendPage(
         'category' => $category,
         'urlBack' => $urlBack,
         'children' => $children,
+        'filtres' => $filtres,
         'nameBack' => $nameBack,
         'posts' => $posts,
+        'offres' => $offres,
         'sortLink' => $sortLink,
         'icone' => $icone,
         'bgcat' => $bgcat,
