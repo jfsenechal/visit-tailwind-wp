@@ -17,6 +17,7 @@ use VisitMarche\Theme\Lib\Twig;
     <link rel="stylesheet" href="/assets/input.c3741591.css">
     <script src="//unpkg.com/alpinejs" defer></script>
     <script src="https://visit.marche.be/wp-content/themes/visittail/js/searchXl.js"></script>
+    <script src="https://visit.marche.be/wp-content/themes/visittail/js/menuMobile.js"></script>
     <?php wp_head(); ?>
 </head>
 
