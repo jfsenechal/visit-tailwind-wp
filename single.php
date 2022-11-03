@@ -1,40 +1,51 @@
 <?php
-/**
- * The template for displaying all single posts
- *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#single-post
- *
- * @package visittail
- */
+
+namespace VisitMarche\ThemeTail;
+
+use VisitMarche\Theme\Lib\Elasticsearch\Searcher;
+use VisitMarche\Theme\Lib\PostUtils;
+use VisitMarche\Theme\Lib\Twig;
+use VisitMarche\Theme\Lib\WpRepository;
 
 get_header();
-?>
 
-	<main id="primary" class="site-main">
+global $post;
 
-		<?php
-		while ( have_posts() ) :
-			the_post();
+$wpRepository = new WpRepository();
 
-			get_template_part( 'template-parts/content', get_post_type() );
+$slugs = explode('/', get_query_var('category_name'));
+$image = PostUtils::getImage($post);
+$currentCategory = get_category_by_slug($slugs[array_key_last($slugs)]);
+$urlBack = get_category_link($currentCategory);
 
-			the_post_navigation(
-				array(
-					'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous:', 'visittail' ) . '</span> <span class="nav-title">%title</span>',
-					'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next:', 'visittail' ) . '</span> <span class="nav-title">%title</span>',
-				)
-			);
+$tags = $wpRepository->getTags($post->ID);
+$recommandations = $wpRepository->getSamePosts($post->ID);
+$next = null;
+if (0 === \count($recommandations)) {
+    $searcher = new Searcher();
+    global $wp_query;
+    $recommandations = $searcher->searchRecommandations($wp_query);
+}
+if ([] !== $recommandations) {
+    $next = $recommandations[0];
+}
 
-			// If comments are open or we have at least one comment, load up the comment template.
-			if ( comments_open() || get_comments_number() ) :
-				comments_template();
-			endif;
+$recommandations = array_slice($recommandations, 0, 3);
+$content = get_the_content(null, null, $post);
+$content = apply_filters('the_content', $content);
+$content = str_replace(']]>', ']]&gt;', $content);
 
-		endwhile; // End of the loop.
-		?>
-
-	</main><!-- #main -->
-
-<?php
-get_sidebar();
-get_footer();
+Twig::rendPage(
+    '@VisitTail/article.html.twig',
+    [
+        'title' => $post->post_title,
+        'post' => $post,
+        'excerpt' => $post->post_excerpt,
+        'tags' => $tags,
+        'image' => $image,
+        'recommandations' => $recommandations,
+        'urlBack' => $urlBack,
+        'currentCategory' => $currentCategory,
+        'content' => $content,
+    ]
+);
