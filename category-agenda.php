@@ -3,9 +3,9 @@
 namespace VisitMarche\ThemeTail;
 
 use AcMarche\Pivot\DependencyInjection\PivotContainer;
-use VisitMarche\Theme\Lib\RouterPivot;
-use VisitMarche\Theme\Lib\LocaleHelper;
-use VisitMarche\Theme\Lib\Twig;
+use VisitMarche\ThemeTail\Lib\RouterPivot;
+use VisitMarche\ThemeTail\Lib\LocaleHelper;
+use VisitMarche\ThemeTail\Lib\Twig;
 
 get_header();
 

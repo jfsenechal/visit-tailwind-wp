@@ -5,10 +5,10 @@ namespace VisitMarche\ThemeTail;
 use AcMarche\Pivot\DependencyInjection\PivotContainer;
 use AcSort;
 use Exception;
-use VisitMarche\Theme\Inc\CategoryMetaBox;
-use VisitMarche\Theme\Lib\RouterPivot;
-use VisitMarche\Theme\Lib\Twig;
-use VisitMarche\Theme\Lib\WpRepository;
+use VisitMarche\ThemeTail\Inc\CategoryMetaBox;
+use VisitMarche\ThemeTail\Lib\RouterPivot;
+use VisitMarche\ThemeTail\Lib\Twig;
+use VisitMarche\ThemeTail\Lib\WpRepository;
 
 get_header();
 

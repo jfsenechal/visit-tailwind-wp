@@ -3,11 +3,7 @@
 namespace VisitMarche\ThemeTail\Lib;
 
 use AcMarche\Pivot\DependencyInjection\PivotContainer;
-use VisitMarche\Theme\Lib\Elasticsearch\Data\ElasticData;
-use VisitMarche\Theme\Lib\LocaleHelper;
-use VisitMarche\Theme\Lib\Mailer;
-use VisitMarche\Theme\Lib\PostUtils;
-use VisitMarche\Theme\Lib\WpRepository;
+use VisitMarche\ThemeTail\Lib\Elasticsearch\Data\ElasticData;
 use WP_Error;
 use WP_HTTP_Response;
 use WP_REST_Request;

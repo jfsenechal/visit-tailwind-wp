@@ -6,12 +6,12 @@ use AcMarche\Pivot\DependencyInjection\PivotContainer;
 use AcSort;
 use Psr\Cache\InvalidArgumentException;
 use SortLink;
-use VisitMarche\Theme\Inc\CategoryMetaBox;
-use VisitMarche\Theme\Lib\LocaleHelper;
-use VisitMarche\Theme\Lib\PostUtils;
-use VisitMarche\Theme\Lib\RouterPivot;
-use VisitMarche\Theme\Lib\Twig;
-use VisitMarche\Theme\Lib\WpRepository;
+use VisitMarche\ThemeTail\Inc\CategoryMetaBox;
+use VisitMarche\ThemeTail\Lib\LocaleHelper;
+use VisitMarche\ThemeTail\Lib\PostUtils;
+use VisitMarche\ThemeTail\Lib\RouterPivot;
+use VisitMarche\ThemeTail\Lib\Twig;
+use VisitMarche\ThemeTail\Lib\WpRepository;
 
 get_header();
 
@@ -77,7 +77,6 @@ if ([] !== $filtres) {
 }
 $image = 'https://visitmarche.be/wp-content/themes/visitmarche/assets/tartine/rsc/img/bg_inspirations.png';
 $sortLink = SortLink::linkSortArticles($cat_ID);
-
 Twig::rendPage(
     '@VisitTail/category.html.twig',
     [

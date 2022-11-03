@@ -2,11 +2,11 @@
 
 namespace VisitMarche\ThemeTail;
 
-use VisitMarche\Theme\Lib\Elasticsearch\Searcher;
-use VisitMarche\Theme\Lib\LocaleHelper;
-use VisitMarche\Theme\Lib\PostUtils;
-use VisitMarche\Theme\Lib\Twig;
-use VisitMarche\Theme\Lib\WpRepository;
+use VisitMarche\ThemeTail\Lib\Elasticsearch\Searcher;
+use VisitMarche\ThemeTail\Lib\LocaleHelper;
+use VisitMarche\ThemeTail\Lib\PostUtils;
+use VisitMarche\ThemeTail\Lib\Twig;
+use VisitMarche\ThemeTail\Lib\WpRepository;
 
 get_header();
 
@@ -47,7 +47,7 @@ Twig::rendPage(
         'image' => $image,
         'recommandations' => $recommandations,
         'urlBack' => $urlBack,
-        'currentCategory' => $currentCategory,
+        'nameBack' => $currentCategory->name,
         'content' => $content,
     ]
 );

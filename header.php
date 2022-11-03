@@ -1,9 +1,9 @@
 <?php
 namespace VisitMarche\ThemeTail;
 
-use VisitMarche\Theme\Inc\Menu;
-use VisitMarche\Theme\Lib\LocaleHelper;
-use VisitMarche\Theme\Lib\Twig;
+use VisitMarche\ThemeTail\Inc\Menu;
+use VisitMarche\ThemeTail\Lib\LocaleHelper;
+use VisitMarche\ThemeTail\Lib\Twig;
 
 $locale = LocaleHelper::getSelectedLanguage();
 ?>
