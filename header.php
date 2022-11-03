@@ -1,11 +1,14 @@
 <?php
 namespace VisitMarche\ThemeTail;
 
+use VisitMarche\Theme\Inc\Menu;
+use VisitMarche\Theme\Lib\LocaleHelper;
 use VisitMarche\Theme\Lib\Twig;
 
+$locale = LocaleHelper::getSelectedLanguage();
 ?>
 <!doctype html>
-<html <?php language_attributes(); ?>>
+<html lang="<?php echo $locale; ?>">
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,10 +26,14 @@ use VisitMarche\Theme\Lib\Twig;
 
 <body <?php body_class(); ?>>
 <?php wp_body_open();
+$menu = new Menu();
+$items = $menu->getMenuTop();
+$icones = $menu->getIcones();
+
 Twig::rendPage(
     '@VisitTail/header/_header.html.twig',
     [
-
+        'items' => $items,
     ]
 );
 ?>
