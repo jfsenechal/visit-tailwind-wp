@@ -21,6 +21,7 @@ $locale = LocaleHelper::getSelectedLanguage();
     <script src="//unpkg.com/alpinejs" defer></script>
     <script src="https://visit.marche.be/wp-content/themes/visittail/js/searchXl.js"></script>
     <script src="https://visit.marche.be/wp-content/themes/visittail/js/menuMobile.js"></script>
+    <script src="https://visit.marche.be/wp-content/themes/visittail/js/refreshOffres.js"></script>
     <?php wp_head(); ?>
 </head>
 
