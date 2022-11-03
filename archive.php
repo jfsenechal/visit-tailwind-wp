@@ -1,51 +1,97 @@
 <?php
-/**
- * The template for displaying archive pages
- *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
- *
- * @package visittail
- */
+
+namespace VisitMarche\ThemeTail;
+
+use AcMarche\Pivot\DependencyInjection\PivotContainer;
+use AcSort;
+use Psr\Cache\InvalidArgumentException;
+use SortLink;
+use VisitMarche\Theme\Inc\CategoryMetaBox;
+use VisitMarche\Theme\Lib\RouterPivot;
+use VisitMarche\Theme\Lib\LocaleHelper;
+use VisitMarche\Theme\Lib\PostUtils;
+use VisitMarche\Theme\Lib\Twig;
+use VisitMarche\Theme\Lib\WpRepository;
+use VisitMarche\Theme\Lib\Elasticsearch\Searcher;
 
 get_header();
-?>
 
-	<main id="primary" class="site-main">
+$cat_ID = get_queried_object_id();
+$category = get_category($cat_ID);
+$categoryName = single_cat_title('', false);
+$permalink = get_category_link($cat_ID);
 
-		<?php if ( have_posts() ) : ?>
+$wpRepository = new WpRepository();
+$translator = LocaleHelper::iniTranslator();
+$language = LocaleHelper::getSelectedLanguage();
 
-			<header class="page-header">
-				<?php
-				the_archive_title( '<h1 class="page-title">', '</h1>' );
-				the_archive_description( '<div class="archive-description">', '</div>' );
-				?>
-			</header><!-- .page-header -->
+$parent = $wpRepository->getParentCategory($cat_ID);
 
-			<?php
-			/* Start the Loop */
-			while ( have_posts() ) :
-				the_post();
+$urlBack = '/'.$language;
+$nameBack = $translator->trans('menu.home');
 
-				/*
-				 * Include the Post-Type-specific template for the content.
-				 * If you want to override this in a child theme, then include a file
-				 * called content-___.php (where ___ is the Post Type name) and that will be used instead.
-				 */
-				get_template_part( 'template-parts/content', get_post_type() );
+if ($parent) {
+    $urlBack = get_category_link($parent->term_id);
+    $nameBack = $parent->name;
+}
 
-			endwhile;
+$posts = $wpRepository->getPostsByCatId($cat_ID);
+$category_order = get_term_meta($cat_ID, CategoryMetaBox::KEY_NAME_ORDER, true);
+if ('manual' === $category_order) {
+    $posts = AcSort::getSortedItems($cat_ID, $posts);
+}
+$header = get_term_meta($cat_ID, CategoryMetaBox::KEY_NAME_HEADER, true);
+$icone = get_term_meta($cat_ID, CategoryMetaBox::KEY_NAME_ICONE, true);
+$bgcat = get_term_meta($cat_ID, CategoryMetaBox::KEY_NAME_COLOR, true);
+if ($header) {
+    $header = '/wp-content/themes/visitmarche/assets/tartine/rsc/img/'.$header;
+}
 
-			the_posts_navigation();
+if ($icone) {
+    $icone = '/wp-content/themes/visitmarche/assets/images/'.$icone;
+}
 
-		else :
+$children = $wpRepository->getChildrenOfCategory($category->cat_ID);
+$filtres = $wpRepository->getCategoryFilters($cat_ID);
 
-			get_template_part( 'template-parts/content', 'none' );
 
-		endif;
-		?>
+if ([] !== $filtres) {
+    $filtres = RouterPivot::setRoutesToFilters($filtres, $cat_ID);
+    $pivotRepository = PivotContainer::getPivotRepository(WP_DEBUG);
+    $offres = [];
 
-	</main><!-- #main -->
-
-<?php
-get_sidebar();
-get_footer();
+    try {
+        $offres = $pivotRepository->getOffres($filtres);
+        array_map(
+            function ($offre) use ($cat_ID, $language) {
+                $offre->url = RouterPivot::getUrlOffre($offre, $cat_ID);
+            },
+            $offres
+        );
+    } catch (InvalidArgumentException $e) {
+        dump($e->getMessage());
+    }
+    //fusion offres et articles
+    $postUtils = new PostUtils();
+    $posts = $postUtils->convertPostsToArray($posts);
+    $offres = $postUtils->convertOffresToArray($offres, $cat_ID, $language);
+    $offres = array_merge($posts, $offres);
+}
+$image = 'https://visitmarche.be/wp-content/themes/visitmarche/assets/tartine/rsc/img/bg_inspirations.png';
+$sortLink = SortLink::linkSortArticles($cat_ID);
+Twig::rendPage(
+    '@VisitTail/category.html.twig',
+    [
+        'title' => $categoryName,
+        'excerpt' => $category->description,
+        'image' => $image,
+        'category' => $category,
+        'urlBack' => $urlBack,
+        'children' => $children,
+        'nameBack' => $nameBack,
+        'posts' => $posts,
+        'sortLink' => $sortLink,
+        'icone' => $icone,
+        'bgcat' => $bgcat,
+    ]
+);
