@@ -1,0 +1,117 @@
+<!--CONTENT-->
+<section id="content" class="pl-ls-42px overflow-ls-hidden overflow-md-hidden pl-ls-lg-0">
+
+    <!--CATEGORY_SLIDE | TODO JF : tranformer en slideshow-->
+    <div class="bg-img-party">
+        <div class="bg-gradient-img d-flex flex-column justify-content-end align-items-start h-100 px-24px px-xl-48px pb-24px position-relative">
+
+            <!--back | TODO JF: lien dynamique vers la page précédente-->
+            <a href="/{{ locale }}"
+               class="button lvl3 align-self-ls-md-start align-self-md-start position-relative right-0 right-hover-12px fs-short-2"><i
+                        class="fas fa-angle-left pr-8px d-ls-md-inline pr-md-12px fs-short-2 d-md-inline"></i>Retour à
+                l'accueil</a>
+
+            <!--title-->
+            <h2 class="text-white lh-100">{{ title ? title : 'Page non trouvée' }}</h2>
+<!--
+            <ul class="position-absolute bottom-28px right-20px xl-right-44px d-flex">
+                <li class="px-4px"><i class="d-block w-8px h-8px bg-white shadow-sm-2 rounded-circle"></i></li>
+                <li class="px-4px"><i class="d-block w-8px h-8px bg-primary shadow-sm-2 rounded-circle"></i></li>
+                <li class="px-4px"><i class="d-block w-8px h-8px bg-primary shadow-sm-2 rounded-circle"></i></li>
+                <li class="px-4px"><i class="d-block w-8px h-8px bg-primary shadow-sm-2 rounded-circle"></i></li>
+                <li class="px-4px"><i class="d-block w-8px h-8px bg-primary shadow-sm-2 rounded-circle"></i></li>
+            </ul>-->
+        </div>
+    </div>
+
+    <!--INTRO-->
+    <div class="bg-cat-par">
+        <div class="position-relative d-flex pt-24px px-24px pb-120px p-xl-48px flex-wrap z-10 justify-content-end justify-content-xl-start mw-1440px mx-auto">
+            <p class="fs-basic fs-xl-big-1 text-white px-0 col-12 col-xl-9">
+                Cette page n'existe plus ou un lien est brisé
+                <br />{{ url }}
+            </p>
+            <img src="{{ template_directory }}/assets/tartine/rsc/img/img_cat01.png" alt="image categorie 1"
+                 class="position-absolute xl-top-0 bottom-n56px xl-bottom-auto right-0 col-8 col-xl-3 mw-214px mw-xl-300px">
+        </div>
+    </div>
+
+    <!--CATEGORY-->
+    <div class="bg-white pt-24px px-24px position-relative d-md-flex px-xl-48px mx-xl-n30px justify-content-md-center flex-column align-items-xl-center">
+
+        <!--category-->
+        <div class="py-48px d-lg-flex mx-n15px mw-1440px">
+            <div class="d-flex flex-column align-items-center mx-md-n15px flex-md-wrap flex-md-row align-items-md-start flex-lg-column col-lg-8 mx-lg-0 flex-lg-nowrap">
+
+                <!--OBJECT | TEXT-DYN | TODO JF : brancher la possibilité d'ouvrir/réduire le content avec un ellipsis + condition sur l'extend-->
+                <div class="object-text-dyn col-md-8 col-ls-md-12 px-0 px-md-15px col-lg-12 px-lg-0">
+                    <input type="checkbox" id="text-dyn"/>
+                    <div for="text-dyn">
+                        <span class="more">Lire plus</span>
+                        <span class="less">Réduire</span>
+                    </div>
+
+                    <!--title-->
+                    <h2 class="pb-48px">{{ title ? title : 'Page non trouvée...' }}</h2>
+
+                    <div for="text-dyn">
+                        <p>Cette page n'existe plus</p>
+                        <a href="/{{ locale }}">
+                            <p>Retour à l'accueil</p>
+                        </a>
+                    </div>
+                </div>
+
+                <!--previous/next-->
+                <div class="pt-24px d-flex w-100 col-md-8 col-ls-md-12 px-0 px-md-15px col-lg-12 px-lg-0">
+                    <!--<div class="col-6 p-0 d-flex">
+                        <a href="#" class="button lvl3 align-self-ls-md-center align-self-md-center position-relative left-0 left-hover-n12px d-flex justify-content-center fs-short-2"><i class="fas fa-angle-left d-ls-md-inline pr-8px pr-md-12px fs-short-1 d-md-inline"></i>Article précédent</a>
+                    </div>-->
+                    <div class="col-12 p-0 d-flex justify-content-end">
+                        <a href="#"
+                           class="button lvl3 align-self-ls-md-center align-self-md-center position-relative left-0 left-hover-12px d-flex justify-content-center fs-short-2">Où
+                            faire la fête<i
+                                    class="fas fa-angle-right d-ls-md-inline pl-8px pl-md-12px fs-short-1 d-md-inline"></i></a>
+                    </div>
+                </div>
+
+                <!--OBJECT | RECOM-->
+                <div class="pt-24px w-100 col-md-8 col-ls-md-12 px-0 px-md-15px d-lg-none">
+                    <h3 class="text-default ff-semibold fs-big-1"></h3>
+                    <div class="pt-12px object-recom">
+                        <a href="#" class="bg-img rounded-xs mh-104px">
+                            <i class="bg-cat2-art">
+                                <b class="bg-il2lu-cat-art bg-img-bgcolor-hover-primary-55"></b>
+                            </i>
+                            <div class="col">
+                                <span class="pt-0 text-default fs-short-2"></span>
+                                <h5 class="text-default text-hover-primary ff-light pt-4px fs-short-3 mh-52px overflow-hidden">
+                                   </h5>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-none d-lg-flex col-4 flex-column pb-60px justify-content-end">
+
+                <!--OBJECT | RECOM-->
+                <div class="pt-24px w-100">
+                    <h3 class="text-default ff-semibold fs-big-1"></h3>
+                    <div class="pt-22px object-recom">
+                        <a href="#" class="bg-img rounded-xs mh-104px">
+                            <i class="bg-2cat-art">
+                                <b class="bg-ill2u-cat-art bg-img-bgcolor-hover-primary-55"></b>
+                            </i>
+                            <div class="col">
+                                <span class="pt-0 text-default fs-short-2"></span>
+                                <h5 class="text-default text-hover-primary ff-light pt-4px fs-short-3 mh-52px overflow-hidden">
+                                   </h5>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
