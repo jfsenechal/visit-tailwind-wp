@@ -72,7 +72,7 @@
                     role="listbox"
             >
                 <!-- Active: "bg-indigo-600 text-white" -->
-                <template x-for="result in results">
+                <template x-for="result in results" :key="result.id">
                     <li class="cursor-default select-none rounded-md px-4 py-2 hover:bg-cta-dark hover:text-white"
                         role="option"
                         tabindex="-1">
