@@ -2,13 +2,13 @@
     <a href="/">Accueil</a>
 </li>
 <li class="hidden xl:list-item border-transparent pb-2 nav-top-xl">
-    <a href="/categorie/inspirations/">Inspirations</a>
+    <a href="{{ items.inspirations.url }}">{{ items.inspirations.name }}</a>
 </li>
 <li class="hidden xl:list-item border-transparent pb-2 nav-top-xl">
-    <a href="/categorie/agenda">Agenda</a>
+    <a href="{{ items.agenda.url }}">{{ items.agenda.name }}</a>
 </li>
 <li class="hidden xl:list-item border-transparent pb-2 nav-top-xl group relative">
-    <a href="#" class="inline-flex items-center text-white">S'organiser
+    <a href="#" class="inline-flex items-center text-white">{{ items.sorganiser.name }}
         <svg class="text-white ml-2 h-5 w-5 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg"
              viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
             <path fill-rule="evenodd"
@@ -18,21 +18,24 @@
     </a>
     <ul class="invisible rounded-md group-hover:visible absolute bg-white font-montserrat-medium text-caractere px-3 py-1 top-11 transition-all duration-500 ease-in-out">
         <li class="before:triangle before:left-10 hover:text-cta-light py-2">
-            <a href="#" class="p-2">Découvrir</a>
+            <a href="{{ items.decouvrir.url }}" class="p-2">{{ items.decouvrir.name }}</a>
         </li>
         <li class="hover:text-cta-light py-2">
-            <a href="#" class="p-2">Savourer</a>
+            <a href="{{ items.savourer.url }}" class="p-2">{{ items.savourer.name }}</a>
         </li>
         <li class="hover:text-cta-light py-2">
-            <a href="#" class="p-2">Bouger</a>
+            <a href="{{ items.bouger.url }}" class="p-2">{{ items.bouger.name }}</a>
         </li>
         <li class="hover:text-cta-light py-2">
-            <a href="#" class="p-2">Séjourner</a>
+            <a href="{{ items.sejourner.url }}" class="p-2">{{ items.sejourner.name }}</a>
+        </li>
+        <li class="hover:text-cta-light py-2">
+            <a href="{{ items.mice.url }}" class="p-2">{{ items.mice.name }}</a>
         </li>
     </ul>
 </li>
 <li class="hidden xl:list-item border-transparent pb-2 nav-top-xl">
-    <a href="#">Pratique</a>
+    <a href="{{ items.pratique.url }}">{{ items.pratique.name }}</a>
 </li>
 <li class="hidden xl:list-item border-transparent pb-2 nav-top-xl">
     <a href="#" @click="searchIsOpen=true">
