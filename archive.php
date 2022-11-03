@@ -96,3 +96,4 @@ Twig::rendPage(
         'bgcat' => $bgcat,
     ]
 );
+get_footer();

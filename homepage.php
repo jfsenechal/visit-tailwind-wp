@@ -60,3 +60,4 @@ Twig::rendPage(
         'intro' => $intro,
     ]
 );
+get_footer();

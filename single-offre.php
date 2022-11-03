@@ -86,3 +86,4 @@ Twig::rendPage(
         'content' => $content,
     ]
 );
+get_footer();

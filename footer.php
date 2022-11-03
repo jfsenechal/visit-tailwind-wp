@@ -1,7 +1,15 @@
 <?php
 namespace VisitMarche\ThemeTail;
 
-wp_footer(); ?>
+use VisitMarche\Theme\Lib\Twig;
 
+wp_footer();
+Twig::rendPage(
+    '@VisitTail/_footer.html.twig',
+    [
+
+    ]
+);
+echo '
 </body>
-</html>
+</html>';
