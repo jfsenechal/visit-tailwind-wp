@@ -1,6 +1,8 @@
 <?php
+
 namespace VisitMarche\ThemeTail;
 
+use VisitMarche\ThemeTail\Inc\ApiRoutes;
 use VisitMarche\ThemeTail\Inc\AssetsLoad;
 use VisitMarche\ThemeTail\Inc\PivotMetaBox;
 use VisitMarche\ThemeTail\Inc\SecurityConfig;
@@ -19,6 +21,10 @@ new AssetsLoad();
  * Un peu de sécurité
  */
 new SecurityConfig();
+/**
+ * Enregistrement des routes api
+ */
+new ApiRoutes();
 /*
  * Ajout de routage pour pivot
  */
