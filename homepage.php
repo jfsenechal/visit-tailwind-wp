@@ -26,7 +26,6 @@ if ('manual' === $category_order) {
 $categoryAgenda = get_category_by_slug('agenda');
 $urlAgenda = '/';
 
-$events = $pivotRepository->getEvents(true);
 try {
     $events = $pivotRepository->getEvents(true);
     if ($categoryAgenda) {
