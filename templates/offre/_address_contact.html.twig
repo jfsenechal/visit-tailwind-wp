@@ -1,0 +1,41 @@
+<div
+        class="col-12 col-md-5 d-flex flex-column flex-ls-row flex-ls-wrap py-24px px-48px px-ls-12px align-self-stretch align-items-ls-start ml-auto bg-pastel">
+    <div class="text-default col-ls-6 px-ls-12px col-ls-md-12">
+        <h4 class="ff-semibold fs-short-1">Addresse</h4>
+        <span class="fs-short-2 pt-8px d-block">
+                                   {{ offre.adresse_rue[0].value }}
+                               </span>
+        <span class="fs-short-2 pt-8px d-block">
+                            {{ offre.adresse.cp }} {{ offre.adresse.localiteByLanguage(locale) }}
+                            </span>
+    </div>
+
+    <!--phone-->
+    {% if offre.tels|length > 0 %}
+        <div class="text-default pt-20px col-ls-6 pt-ls-0 px-ls-12px col-ls-md-12 pt-ls-md-20px">
+            <h4 class="ff-semibold fs-short-1">{{ 'article.phone'|trans }}</h4>
+            <a href="tel:{{ offre.tels[0] }}"
+               class="fs-short-2 pt-8px d-block text-default">{{ offre.tels[0] }}</a>
+        </div>
+    {% endif %}
+
+    <!--mail-->
+    {% if offre.emails|length > 0 %}
+        <div class="text-default pt-20px col-ls-6 px-ls-12px col-ls-md-12 pt-ls-md-20px">
+            <h4 class="ff-semibold fs-short-1">{{ 'article.email'|trans }}</h4>
+            <a href="mailto:{{ offre.emails[0] }}"
+               class="fs-short-2 pt-8px d-block text-default">
+                {{ offre.emails[0] }}
+            </a>
+        </div>
+    {% endif %}
+
+    <!--website-->
+    {% if offre.webs|length > 0 %}
+        <div class="text-default pt-20px col-ls-6 px-ls-12px col-ls-md-12 pt-ls-md-20px">
+            <h4 class="ff-semibold fs-short-1">{{ 'article.website'|trans }}</h4>
+            <a href="{{ offre.webs[0].value }}" target="_blank"
+               class="fs-short-2 pt-8px d-block text-default">{{ offre.webs[0].value }}</a>
+        </div>
+    {% endif %}
+</div>

@@ -5,20 +5,15 @@ namespace VisitMarche\ThemeTail;
 use AcMarche\Pivot\DependencyInjection\PivotContainer;
 use AcMarche\Pivot\Entities\Offre\Offre;
 use Exception;
-use VisitMarche\Theme\Lib\Elasticsearch\Searcher;
+use VisitMarche\Theme\Lib\GpxViewer;
 use VisitMarche\Theme\Lib\LocaleHelper;
-use VisitMarche\Theme\Lib\PostUtils;
 use VisitMarche\Theme\Lib\RouterPivot;
 use VisitMarche\Theme\Lib\Twig;
-use VisitMarche\Theme\Lib\WpRepository;
 
 get_header();
 
-global $post;
-
 $codeCgt = get_query_var(RouterPivot::PARAM_OFFRE);
 
-$language = LocaleHelper::getSelectedLanguage();
 $currentCategory = get_category_by_slug(get_query_var('category_name'));
 $urlBack = get_category_link($currentCategory);
 $nameBack = $currentCategory->name;
@@ -36,7 +31,7 @@ if (!$offre) {
         $offre = $pivotRepository->getOffreByCgtAndParse($codeCgt, Offre::class);
     } catch (Exception $e) {
         Twig::rendPage(
-            'errors/500.html.twig',
+            '@VisitTail/errors/500.html.twig',
             [
                 'title' => 'Error',
                 'message' => 'Impossible de charger l\'offre: '.$e->getMessage(),
@@ -48,42 +43,68 @@ if (!$offre) {
     }
 }
 
-$wpRepository = new WpRepository();
+if (null === $offre) {
+    Twig::rendPage(
+        '@VisitTail/errors/404.html.twig',
+        [
+            'url' => '',
+            'title' => 'Page non trouvée',
+        ]
+    );
 
-$slugs = explode('/', get_query_var('category_name'));
-$image = PostUtils::getImage($post);
-$currentCategory = get_category_by_slug($slugs[array_key_last($slugs)]);
-$urlBack = get_category_link($currentCategory);
+    get_footer();
 
-$tags = $wpRepository->getTags($post->ID);
-$recommandations = $wpRepository->getSamePosts($post->ID);
-$next = null;
-if (0 === \count($recommandations)) {
-    $searcher = new Searcher();
-    global $wp_query;
-    $recommandations = $searcher->searchRecommandations($wp_query);
-}
-if ([] !== $recommandations) {
-    $next = $recommandations[0];
+    return;
 }
 
-$recommandations = array_slice($recommandations, 0, 3);
-$content = get_the_content(null, null, $post);
-$content = apply_filters('the_content', $content);
-$content = str_replace(']]>', ']]&gt;', $content);
+$language = LocaleHelper::getSelectedLanguage();
+$categoryOffres = get_category_by_slug('offres');
+$urlCat = get_category_link($categoryOffres);
+$tags = [];
+foreach ($offre->categories as $category) {
+    $tags[] = [
+        'name' => $category->labelByLanguage($language),
+        'url' => $urlCat.'?'.RouterPivot::PARAM_FILTRE.'='.$category->urn,
+    ];
+}
+$recommandations = $offres = [];
+if (count($offre->voir_aussis)) {
+    $offres = $offre->voir_aussis;
+} else {
+    $offres = $pivotRepository->getSameOffres($offre);
+}
+foreach ($offres as $item) {
+    $url = RouterPivot::getUrlOffre($item, $currentCategory->cat_ID);
+    $tags2 = [$item->typeOffre->labelByLanguage($language)];
+
+    $recommandations[] = [
+        'title' => $item->nomByLanguage($language),
+        'url' => $url,
+        'image' => $item->firstImage(),
+        'categories' => $tags2,
+    ];
+}
+foreach ($offre->pois as $poi) {
+    $poi->url = RouterPivot::getUrlOffre($poi, $currentCategory->cat_ID);
+}
+
+$gpxMap = null;
+if (count($offre->gpxs) > 0) {
+    $gpxViewer = new GpxViewer();
+    $gpxMap = $gpxViewer->gpxViewer($offre->gpxs[0]);
+}
 
 Twig::rendPage(
-    '@VisitTail/article.html.twig',
+    '@VisitTail/offre.html.twig',
     [
-        'title' => $post->post_title,
-        'post' => $post,
-        'excerpt' => $post->post_excerpt,
+        'title' => $offre->nomByLanguage($language),
+        'offre' => $offre,
+        'excerpt' => 'ici',
         'tags' => $tags,
-        'image' => $image,
+        'image' => $offre->firstImage(),
         'recommandations' => $recommandations,
         'urlBack' => $urlBack,
         'currentCategory' => $currentCategory,
-        'content' => $content,
     ]
 );
 get_footer();

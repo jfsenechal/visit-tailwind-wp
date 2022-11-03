@@ -2,8 +2,10 @@
 namespace VisitMarche\ThemeTail;
 
 use VisitMarche\ThemeTail\Inc\AssetsLoad;
+use VisitMarche\ThemeTail\Inc\PivotMetaBox;
 use VisitMarche\ThemeTail\Inc\SecurityConfig;
 use VisitMarche\ThemeTail\Inc\SetupTheme;
+use VisitMarche\ThemeTail\Lib\RouterPivot;
 
 /**
  * Initialisation du thème
@@ -17,4 +19,12 @@ new AssetsLoad();
  * Un peu de sécurité
  */
 new SecurityConfig();
+/*
+ * Ajout de routage pour pivot
+ */
+new RouterPivot();
+/*
+ * Pour hades
+ */
+new PivotMetaBox();
 
