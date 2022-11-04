@@ -3,6 +3,7 @@
 namespace VisitMarche\ThemeTail;
 
 use AcMarche\Pivot\DependencyInjection\PivotContainer;
+use AcMarche\Pivot\Entity\TypeOffre;
 use AcSort;
 use Psr\Cache\InvalidArgumentException;
 use SortLink;
@@ -39,24 +40,32 @@ $category_order = get_term_meta($cat_ID, CategoryMetaBox::KEY_NAME_ORDER, true);
 if ('manual' === $category_order) {
     $posts = AcSort::getSortedItems($cat_ID, $posts);
 }
-$header = get_term_meta($cat_ID, CategoryMetaBox::KEY_NAME_HEADER, true);
+$image = get_term_meta($cat_ID, CategoryMetaBox::KEY_NAME_HEADER, true);
 $icone = get_term_meta($cat_ID, CategoryMetaBox::KEY_NAME_ICONE, true);
 $bgcat = get_term_meta($cat_ID, CategoryMetaBox::KEY_NAME_COLOR, true);
-if ($header) {
-    $header = '/wp-content/themes/visitmarche/assets/tartine/rsc/img/'.$header;
+
+if ($image) {
+    $image = get_template_directory_uri().'/assets/tartine/'.$image;
+} else {
+    $image = get_template_directory_uri().'/assets/tartine/bg_inspirations.png';
 }
 
 if ($icone) {
-    $icone = '/wp-content/themes/visitmarche/assets/images/'.$icone;
+    $icone = get_template_directory_uri().'/assets/tartine/'.$icone;
 }
 
 $children = $wpRepository->getChildrenOfCategory($category->cat_ID);
 $filtres = $wpRepository->getCategoryFilters($cat_ID);
+$offres = [];
 
 if ([] !== $filtres) {
+    if (count($filtres) > 1) {
+        $filtreTout = new TypeOffre("Tout", 0, 0, "ALL", "", "Type", null);
+        $filtreTout->id = 0;
+        $filtres[] = $filtreTout;
+    }
     $filtres = RouterPivot::setRoutesToFilters($filtres, $cat_ID);
     $pivotRepository = PivotContainer::getPivotRepository(WP_DEBUG);
-    $offres = [];
 
     try {
         $offres = $pivotRepository->getOffres($filtres);
@@ -71,11 +80,10 @@ if ([] !== $filtres) {
     }
     //fusion offres et articles
     $postUtils = new PostUtils();
-    $posts = $postUtils->convertPostsToArray($posts);
+    //  $posts = $postUtils->convertPostsToArray($posts);
     $offres = $postUtils->convertOffresToArray($offres, $cat_ID, $language);
-    $offres = array_merge($posts, $offres);
+    // $offres = array_merge($posts, $offres);
 }
-$image = 'https://visitmarche.be/wp-content/themes/visitmarche/assets/tartine/rsc/img/bg_inspirations.png';
 $sortLink = SortLink::linkSortArticles($cat_ID);
 Twig::rendPage(
     '@VisitTail/category.html.twig',

@@ -36,11 +36,7 @@ class Twig
             ]
         );
 
-        $loader->addPath(ABSPATH.'wp-content/themes/visitmarche/templates/', 'Visit');
-        try {
-            $loader->addPath(ABSPATH.'wp-content/themes/visittail/templates/', 'VisitTail');
-        } catch (LoaderError $e) {
-        }
+        $loader->addPath(ABSPATH.'wp-content/themes/visittail/templates/', 'VisitTail');
 
         $environment->addExtension(new DebugExtension());
 

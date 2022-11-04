@@ -2,11 +2,16 @@
 
 namespace VisitMarche\ThemeTail;
 
+use VisitMarche\ThemeTail\Inc\AdminPage;
+use VisitMarche\ThemeTail\Inc\Ajax;
 use VisitMarche\ThemeTail\Inc\ApiRoutes;
 use VisitMarche\ThemeTail\Inc\AssetsLoad;
+use VisitMarche\ThemeTail\Inc\CategoryMetaBox;
 use VisitMarche\ThemeTail\Inc\PivotMetaBox;
 use VisitMarche\ThemeTail\Inc\SecurityConfig;
+use VisitMarche\ThemeTail\Inc\Seo;
 use VisitMarche\ThemeTail\Inc\SetupTheme;
+use VisitMarche\ThemeTail\Inc\ShortCodes;
 use VisitMarche\ThemeTail\Lib\RouterPivot;
 
 /**
@@ -25,12 +30,32 @@ new SecurityConfig();
  * Enregistrement des routes api
  */
 new ApiRoutes();
-/*
+/**
  * Ajout de routage pour pivot
  */
 new RouterPivot();
-/*
- * Pour hades
+/**
+ * Pour enregistrer filtres pivot
  */
 new PivotMetaBox();
+/*
+ * Meta data pivot
+ */
+new CategoryMetaBox();
+/**
+ * Balises pour le référencement
+ */
+//new Seo();
+/**
+ * Gpx viewer
+ */
+//new ShortCodes();
+/**
+ * Admin pages
+ */
+//new AdminPage();
+/**
+ * Ajax for admin
+ */
+//new Ajax();
 

@@ -112,6 +112,8 @@ class ApiData
         //fusion offres et articles
         $posts = $postUtils->convertPostsToArray($posts);
 
+        return $offres;
+
         return array_merge($posts, $offres);
     }
 }
