@@ -385,4 +385,32 @@ class WpRepository
         return array_values($allFiltres);//reset keys for js
     }
 
+    public function categoryImage(WP_Term $category): string
+    {
+        if ($imageId = get_term_meta($category->term_id, 'image', true)) {
+            $image = esc_url(wp_get_attachment_image_url(($imageId), 'full'));
+        }
+
+        if (!$image) {
+            $image = get_template_directory_uri().'/assets/tartine/bg_inspirations.png';
+        }
+
+        return $image;
+    }
+
+    public function categoryBgColor(WP_Term $category): string
+    {
+        return IconeEnum::bgColor($category->slug);
+    }
+
+    public function categoryIcone(WP_Term $category): string
+    {
+        $icon = IconeEnum::icone($category->slug);
+        if ($icon) {
+            $icon = get_template_directory_uri().'/assets/tartine/'.$icon;
+        }
+
+        return $icon;
+    }
+
 }

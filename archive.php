@@ -41,19 +41,10 @@ $category_order = get_term_meta($cat_ID, CategoryMetaBox::KEY_NAME_ORDER, true);
 if ('manual' === $category_order) {
     $posts = AcSort::getSortedItems($cat_ID, $posts);
 }
-$image = get_term_meta($cat_ID, CategoryMetaBox::KEY_NAME_HEADER, true);
-$icone = IconeEnum::icone($category->slug);
-$bgcat = IconeEnum::bgColor($category->slug);
 
-if ($image) {
-    $image = get_template_directory_uri().'/assets/tartine/'.$image;
-} else {
-    $image = get_template_directory_uri().'/assets/tartine/bg_inspirations.png';
-}
-
-if ($icone) {
-    $icone = get_template_directory_uri().'/assets/tartine/'.$icone;
-}
+$icone = $wpRepository->categoryIcone($category);
+$bgcat = $wpRepository->categoryBgColor($category);
+$image=$wpRepository->categoryImage($category);
 
 $children = $wpRepository->getChildrenOfCategory($category->cat_ID);
 $filtres = $wpRepository->getCategoryFilters($cat_ID);
@@ -92,6 +83,8 @@ Twig::rendPage(
         'title' => $categoryName,
         'excerpt' => $category->description,
         'image' => $image,
+        'bgCat' => $bgcat,
+        'icone' => $icone,
         'category' => $category,
         'urlBack' => $urlBack,
         'children' => $children,
@@ -100,7 +93,6 @@ Twig::rendPage(
         'posts' => $posts,
         'offres' => $offres,
         'sortLink' => $sortLink,
-        'icone' => $icone,
         'bgcat' => $bgcat,
     ]
 );

@@ -41,7 +41,7 @@ new PivotMetaBox();
 /*
  * Meta data pivot
  */
-new CategoryMetaBox();
+//new CategoryMetaBox();
 /**
  * Balises pour le référencement
  */

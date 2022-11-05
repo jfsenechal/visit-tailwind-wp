@@ -49,7 +49,7 @@ Twig::rendPage(
         'events' => $events,
         'category' => $category,
         'title' => $category->name,
-        'image' => 'https://visitmarche.be/wp-content/themes/visitmarche/assets/tartine/rsc/img/bg_events.png',
+        'image' =>get_template_directory_uri().'/assets/tartine/bg_events.png',
     ]
 );
 
