@@ -29,7 +29,6 @@ $locale = LocaleHelper::getSelectedLanguage();
 <?php wp_body_open();
 $menu = new Menu();
 $items = $menu->getMenuTop();
-$icones = $menu->getIcones();
 
 Twig::rendPage(
     '@VisitTail/header/_header.html.twig',
@@ -37,4 +36,3 @@ Twig::rendPage(
         'items' => $items,
     ]
 );
-?>

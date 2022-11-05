@@ -8,6 +8,7 @@ use AcSort;
 use Psr\Cache\InvalidArgumentException;
 use SortLink;
 use VisitMarche\ThemeTail\Inc\CategoryMetaBox;
+use VisitMarche\ThemeTail\Lib\IconeEnum;
 use VisitMarche\ThemeTail\Lib\LocaleHelper;
 use VisitMarche\ThemeTail\Lib\PostUtils;
 use VisitMarche\ThemeTail\Lib\RouterPivot;
@@ -41,8 +42,8 @@ if ('manual' === $category_order) {
     $posts = AcSort::getSortedItems($cat_ID, $posts);
 }
 $image = get_term_meta($cat_ID, CategoryMetaBox::KEY_NAME_HEADER, true);
-$icone = get_term_meta($cat_ID, CategoryMetaBox::KEY_NAME_ICONE, true);
-$bgcat = get_term_meta($cat_ID, CategoryMetaBox::KEY_NAME_COLOR, true);
+$icone = IconeEnum::icone($category->slug);
+$bgcat = IconeEnum::bgColor($category->slug);
 
 if ($image) {
     $image = get_template_directory_uri().'/assets/tartine/'.$image;
