@@ -6,6 +6,7 @@ use AcMarche\Pivot\DependencyInjection\PivotContainer;
 use AcSort;
 use Exception;
 use VisitMarche\ThemeTail\Inc\CategoryMetaBox;
+use VisitMarche\ThemeTail\Inc\Menu;
 use VisitMarche\ThemeTail\Lib\RouterPivot;
 use VisitMarche\ThemeTail\Lib\Twig;
 use VisitMarche\ThemeTail\Lib\WpRepository;
@@ -51,6 +52,8 @@ foreach ($events as $event) {
         'day' => $event->dateEnd->format('d'),
     ];
 }
+$menu = new Menu();
+$icones = $menu->getIcones();
 Twig::rendPage(
     '@VisitTail/homepage.html.twig',
     [
@@ -58,6 +61,7 @@ Twig::rendPage(
         'inspirations' => $inspirations,
         'urlAgenda' => $urlAgenda,
         'intro' => $intro,
+        'icones' => $icones,
     ]
 );
 get_footer();

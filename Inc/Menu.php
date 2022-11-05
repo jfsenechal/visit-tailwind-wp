@@ -2,14 +2,18 @@
 
 namespace VisitMarche\ThemeTail\Inc;
 
+use VisitMarche\ThemeTail\Lib\IconeEnum;
 use VisitMarche\ThemeTail\Lib\LocaleHelper;
 
 class Menu
 {
     public const MENU_NAME = 'menu-top';
-    public const ICONES_NAME = 'icones-home';
+    public const ICONES_NAME = 'icones-home22';
     public const EXPIRATION = 86400;
 
+    /**
+     * @return \WP_Term[]
+     */
     public function getIcones(): array
     {
         $language = LocaleHelper::getSelectedLanguage();
@@ -28,6 +32,7 @@ class Menu
             function ($icone) {
                 if ($icone) {
                     $icone->url = get_category_link($icone);
+                    $icone->imageWhite = IconeEnum::iconeWhite($icone->slug);
                 }
 
                 return $icone;

@@ -53,6 +53,7 @@ class Twig
         $environment->addFilter(self::makeClikable());
         $environment->addFunction(self::showTemplate());
         $environment->addFunction(self::currentUrl());
+        $environment->addFunction(self::templateUri());
         $environment->addFunction(self::isExternalUrl());
         $environment->addFilter(self::removeHtml());
 
@@ -175,6 +176,14 @@ class Twig
                 'tel' => '<a href="tel:'.$text.'">'.$text.'</a>',
                 default => $text,
             }
+        );
+    }
+
+    private static function templateUri(): TwigFunction
+    {
+        return new TwigFunction(
+            'template_uri',
+            fn(): string => get_template_directory_uri()
         );
     }
 
