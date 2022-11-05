@@ -6,6 +6,7 @@ use AcMarche\Pivot\DependencyInjection\PivotContainer;
 use VisitMarche\ThemeTail\Lib\RouterPivot;
 use VisitMarche\ThemeTail\Lib\LocaleHelper;
 use VisitMarche\ThemeTail\Lib\Twig;
+use VisitMarche\ThemeTail\Lib\WpRepository;
 
 get_header();
 
@@ -14,6 +15,9 @@ $category = get_category($cat_ID);
 
 $language = LocaleHelper::getSelectedLanguage();
 $pivotRepository = PivotContainer::getPivotRepository(WP_DEBUG);
+
+$wpRepository = new WpRepository();
+$image = $wpRepository->categoryImage($category);
 
 try {
     $events = $pivotRepository->getEvents(true);
@@ -49,7 +53,7 @@ Twig::rendPage(
         'events' => $events,
         'category' => $category,
         'title' => $category->name,
-        'image' =>get_template_directory_uri().'/assets/tartine/bg_events.png',
+        'image' => $image
     ]
 );
 

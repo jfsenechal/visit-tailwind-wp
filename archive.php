@@ -44,7 +44,7 @@ if ('manual' === $category_order) {
 
 $icone = $wpRepository->categoryIcone($category);
 $bgcat = $wpRepository->categoryBgColor($category);
-$image=$wpRepository->categoryImage($category);
+$image = $wpRepository->categoryImage($category);
 
 $children = $wpRepository->getChildrenOfCategory($category->cat_ID);
 $filtres = $wpRepository->getCategoryFilters($cat_ID);

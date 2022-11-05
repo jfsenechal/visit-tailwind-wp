@@ -340,39 +340,6 @@ class WpRepository
     }
 
     /**
-     * @return TypeOffre[]
-     * @throws NonUniqueResultException
-     */
-    public static function getChildrenTest(): array
-    {
-        $allFiltres = [];
-        $pivotRepository = PivotContainer::getPivotRepository(WP_DEBUG);
-        $filtreRepository = PivotContainer::getTypeOffreRepository(WP_DEBUG);
-
-        $families = $pivotRepository->thesaurusChildren(
-            UrnTypeList::decouverteEtDivertissement()->typeId,
-            UrnList::CATEGORIE_PATRIMOINE_BATI->value
-        );
-
-        $filtre = $filtreRepository->findOneByUrn("urn:fld:catdec:patrbati");
-
-        $filtre->children = [];
-        $allFiltres[] = $filtre;
-
-        return $allFiltres;
-        foreach ($families as $family) {
-            $filtres = $filtreRepository->findsByUrn($family->urn);
-            if (count($filtres) > 0) {
-                $filtre = $filtres[0];
-                $filtre->children = [];//bug loop infinit
-                $allFiltres[] = $filtre;
-            }
-        }
-
-        return $allFiltres;
-    }
-
-    /**
      * @param array|TypeOffre[] $allFiltres
      * @return array|TypeOffre[]
      */
@@ -387,6 +354,7 @@ class WpRepository
 
     public function categoryImage(WP_Term $category): string
     {
+        $image = null;
         if ($imageId = get_term_meta($category->term_id, 'image', true)) {
             $image = esc_url(wp_get_attachment_image_url(($imageId), 'full'));
         }
