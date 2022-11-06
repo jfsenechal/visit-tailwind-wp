@@ -12,27 +12,32 @@ class AssetsLoad
 
     public function visitmarcheAssets(): void
     {
-        wp_enqueue_script(
-            'oljf-js',
-            get_template_directory_uri().'/assets/js/dist/js/oljf.js',
-            [],
-            false,
-            false
+        wp_enqueue_style(
+            'visitmarche-css',
+            get_template_directory_uri().'/assets/visit.css',
         );
-     /*   wp_enqueue_script(
-            'titi-js',
-            get_template_directory_uri().'/assets/js/titi.js',
-            [],
-            false,
-            false
-        );*/
 
-     /*   wp_enqueue_style(
-            'visitmarche-jf-style',
-            get_template_directory_uri().'/assets/js/dist/css/oljf.css',
-            [],
-            wp_get_theme()->get('Version')
-        );*/
+        /*   wp_enqueue_script(
+               'oljf-js',
+               get_template_directory_uri().'/assets/js/dist/js/oljf.js',
+               [],
+               false,
+               false
+           );
+           wp_enqueue_script(
+               'titi-js',
+               get_template_directory_uri().'/assets/js/titi.js',
+               [],
+               false,
+               false
+           );
+
+        /*   wp_enqueue_style(
+               'visitmarche-jf-style',
+               get_template_directory_uri().'/assets/js/dist/css/oljf.css',
+               [],
+               wp_get_theme()->get('Version')
+           );*/
 
     }
 
@@ -45,7 +50,7 @@ class AssetsLoad
      */
     function addAsModule($tag, $handle, $src)
     {
-        if (!in_array($handle, ['oljf-js','titi-js'])) {
+        if (!in_array($handle, ['oljf-js', 'titi-js'])) {
             return $tag;
         }
 
