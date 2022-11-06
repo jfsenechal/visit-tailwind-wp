@@ -19,7 +19,7 @@ export default defineConfig({
                 appFiltreAdmin: 'src/ol.js',
             },
             output: {
-                assetFileNames: 'js/oljf.css',
+                assetFileNames: 'css/oljf.css',
                 entryFileNames: 'js/oljf.js',
             },
         }

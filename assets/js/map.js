@@ -1,15 +1,17 @@
-document.addEventListener('alpine:init', () => {
 
-    import oljf from '../../../../dist/assets/js/oljf';
+import oljf2 from "./dist/js/oljf.js";
+
+document.addEventListener('alpine:init', () => {
 
     Alpine.data('map', () => ({
             latitude: false,
             longitude: false,
             isLoading: false,
-            initMap() {
+            init() {
                 console.log(`map for ${this.latitude}`);
+                console.log(window.oljf)
                 const mapdiv = document.getElementById('openmap_offre')
-                oljf()
+                oljf2()
             }
         })
     )
