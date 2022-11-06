@@ -78,14 +78,16 @@ foreach ($offre->pois as $poi) {
 $gpxMap = null;
 if (count($offre->gpxs) > 0) {
     $gpxViewer = new GpxViewer();
-    $gpxMap = $gpxViewer->gpxViewer($offre->gpxs[0]);
+    $gpxMap = $gpxViewer->render($offre->gpxs[0]);
 }
 
 Twig::rendPage(
     '@VisitTail/offre.html.twig',
     [
-        'title' => $offre->nomByLanguage($language),
         'offre' => $offre,
+        'title' => $offre->nomByLanguage($language),
+        'latitude' => $offre->getAdresse()->latitude ?? null,
+        'longitude' => $offre->getAdresse()->longitude ?? null,
         'excerpt' => 'ici',
         'tags' => $tags,
         'image' => $offre->firstImage(),
