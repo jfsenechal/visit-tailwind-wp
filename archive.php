@@ -8,7 +8,6 @@ use AcSort;
 use Psr\Cache\InvalidArgumentException;
 use SortLink;
 use VisitMarche\ThemeTail\Inc\CategoryMetaBox;
-use VisitMarche\ThemeTail\Lib\IconeEnum;
 use VisitMarche\ThemeTail\Lib\LocaleHelper;
 use VisitMarche\ThemeTail\Lib\PostUtils;
 use VisitMarche\ThemeTail\Lib\RouterPivot;
