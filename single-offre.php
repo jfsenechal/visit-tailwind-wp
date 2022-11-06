@@ -9,6 +9,7 @@ use VisitMarche\ThemeTail\Lib\GpxViewer;
 use VisitMarche\ThemeTail\Lib\LocaleHelper;
 use VisitMarche\ThemeTail\Lib\RouterPivot;
 use VisitMarche\ThemeTail\Lib\Twig;
+use VisitMarche\ThemeTail\Lib\WpRepository;
 
 get_header();
 
@@ -16,7 +17,6 @@ $codeCgt = get_query_var(RouterPivot::PARAM_OFFRE);
 
 $currentCategory = get_category_by_slug(get_query_var('category_name'));
 $urlBack = get_category_link($currentCategory);
-$nameBack = $currentCategory->name;
 
 $pivotRepository = PivotContainer::getPivotRepository(WP_DEBUG);
 
@@ -67,23 +67,10 @@ foreach ($offre->categories as $category) {
         'url' => $urlCat.'?'.RouterPivot::PARAM_FILTRE.'='.$category->urn,
     ];
 }
-$recommandations = $offres = [];
-if (count($offre->voir_aussis)) {
-    $offres = $offre->voir_aussis;
-} else {
-    $offres = $pivotRepository->getSameOffres($offre);
-}
-foreach ($offres as $item) {
-    $url = RouterPivot::getUrlOffre($item, $currentCategory->cat_ID);
-    $tags2 = [$item->typeOffre->labelByLanguage($language)];
 
-    $recommandations[] = [
-        'title' => $item->nomByLanguage($language),
-        'url' => $url,
-        'image' => $item->firstImage(),
-        'categories' => $tags2,
-    ];
-}
+$wpRepository = new WpRepository();
+$recommandations = $wpRepository->recommandationsByOffre($offre, $currentCategory, $language);
+
 foreach ($offre->pois as $poi) {
     $poi->url = RouterPivot::getUrlOffre($poi, $currentCategory->cat_ID);
 }

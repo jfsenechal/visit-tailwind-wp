@@ -3,12 +3,15 @@
 namespace VisitMarche\ThemeTail\Lib;
 
 use AcMarche\Pivot\DependencyInjection\PivotContainer;
+use AcMarche\Pivot\Entities\Event\Event;
+use AcMarche\Pivot\Entities\Offre\Offre;
 use AcMarche\Pivot\Entity\TypeOffre;
 use AcMarche\Pivot\Spec\UrnList;
 use AcMarche\Pivot\Spec\UrnTypeList;
 use Doctrine\ORM\NonUniqueResultException;
 use VisitMarche\ThemeTail\Inc\PivotMetaBox;
 use VisitMarche\ThemeTail\Inc\Theme;
+use VisitMarche\ThemeTail\Lib\Elasticsearch\Searcher;
 use WP_Post;
 use WP_Query;
 use WP_Term;
@@ -100,7 +103,7 @@ class WpRepository
         return $children;
     }
 
-    public function getSamePosts(int $postId, int $max = 3): array
+    private function getSamePosts(int $postId): array
     {
         $categories = get_the_category($postId);
         $args = [
@@ -381,4 +384,48 @@ class WpRepository
         return $icon;
     }
 
+    /**
+     * @param WP_Post $post
+     * @return array
+     */
+    public function recommandationsByPost(WP_Post $post): array
+    {
+        $recommandations = $this->getSamePosts($post->ID);
+        if (0 === \count($recommandations)) {
+            $searcher = new Searcher();
+            global $wp_query;
+            $recommandations = $searcher->searchRecommandations($wp_query);
+        }
+
+        return $recommandations;
+    }
+
+    public function recommandationsByOffre(Offre|Event $offre, WP_Term $category, string $language): array
+    {
+        $recommandations = [];
+        if (count($offre->voir_aussis)) {
+            $offres = $offre->voir_aussis;
+        } else {
+            $pivotRepository = PivotContainer::getPivotRepository();
+            if ($offre instanceof Offre) {
+                $offres = $pivotRepository->getSameOffres($offre);
+            }
+            if ($offre instanceof Event) {
+                $recommandations = $pivotRepository->getSameEvents($offre);
+            }
+        }
+        foreach ($offres as $item) {
+            $url = RouterPivot::getUrlOffre($item, $category->cat_ID);
+            $tags2 = [$item->typeOffre->labelByLanguage($language)];
+
+            $recommandations[] = [
+                'title' => $item->nomByLanguage($language),
+                'url' => $url,
+                'image' => $item->firstImage(),
+                'categories' => $tags2,
+            ];
+        }
+
+        return $recommandations;
+    }
 }
