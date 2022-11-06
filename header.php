@@ -18,10 +18,11 @@ $locale = LocaleHelper::getSelectedLanguage();
     <link rel="modulepreload" crossorigin href="/assets/Cadre.acc3c6eb.js">
     <link rel="stylesheet" href="/assets/Footer.3d49acf8.css">
     <link rel="stylesheet" href="/assets/input.c3741591.css">
+    <script src="https://visit.marche.be/wp-content/themes/visittail/assets/js/searchXl.js" defer></script>
+    <script src="https://visit.marche.be/wp-content/themes/visittail/assets/js/menuMobile.js" defer></script>
+    <script src="https://visit.marche.be/wp-content/themes/visittail/assets/js/refreshOffres.js" defer></script>
+    <script type="module" src="https://visit.marche.be/wp-content/themes/visittail/assets/js/map.js" defer></script>
     <script src="//unpkg.com/alpinejs" defer></script>
-    <script src="https://visit.marche.be/wp-content/themes/visittail/js/searchXl.js"></script>
-    <script src="https://visit.marche.be/wp-content/themes/visittail/js/menuMobile.js"></script>
-    <script src="https://visit.marche.be/wp-content/themes/visittail/js/refreshOffres.js"></script>
     <?php wp_head(); ?>
 </head>
 
