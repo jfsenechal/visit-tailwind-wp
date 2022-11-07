@@ -1,8 +1,4 @@
-
-import oljf2 from "./dist/js/appOl-jf";
-
 document.addEventListener('alpine:init', () => {
-
     Alpine.data('map', () => ({
             latitude: false,
             longitude: false,
@@ -11,7 +7,6 @@ document.addEventListener('alpine:init', () => {
                 console.log(`map for ${this.latitude}`);
                 console.log(window.oljf)
                 const mapdiv = document.getElementById('openmap_offre')
-                oljf2()
             }
         })
     )
