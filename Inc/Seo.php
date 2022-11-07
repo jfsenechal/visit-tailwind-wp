@@ -31,13 +31,6 @@ class Seo
 
             return;
         }
-        $cat_id = get_query_var('cat');
-        if ($cat_id) {
-            self::metaCategory($cat_id);
-            self::renderMetas();
-
-            return;
-        }
 
         global $post;
         if ($post) {
@@ -47,17 +40,18 @@ class Seo
             return;
         }
 
-        $codeCgt = get_query_var(RouterPivot::PARAM_EVENT);
+        $codeCgt = get_query_var(RouterPivot::PARAM_OFFRE);
         if ($codeCgt) {
-            self::metaHadesOffre($codeCgt);
+            self::metaPivotOffre($codeCgt);
+            self::renderMetas();
+        }
+
+        $cat_id = get_query_var('cat');
+        if ($cat_id) {
+            self::metaCategory($cat_id);
             self::renderMetas();
 
             return;
-        }
-
-        $codeCgt = get_query_var(RouterPivot::OFFRE_URL);
-        if ($codeCgt) {
-            self::metaHadesOffre($codeCgt);
         }
 
         self::renderMetas();
@@ -94,11 +88,12 @@ class Seo
         }
     }
 
-    private static function metaHadesOffre(string $codeCgt): void
+    private static function metaPivotOffre(string $codeCgt): void
     {
         $language = LocaleHelper::getSelectedLanguage();
         $pivotRepository = PivotContainer::getPivotRepository(WP_DEBUG);
         $offre = $pivotRepository->getOffreByCgtAndParse($codeCgt, Offre::class);
+
         if (null !== $offre) {
             $base = self::baseTitle('');
             self::$metas['title'] = $offre->nomByLanguage($language).$base;
