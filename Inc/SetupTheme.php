@@ -170,7 +170,7 @@ function visittail_setup()
     );
 }
 
-add_action('after_setup_theme', 'visittail_setup');
+//add_action('after_setup_theme', 'visittail_setup');
 
 /**
  * Set the content width in pixels, based on the theme's design and stylesheet.
@@ -184,7 +184,7 @@ function visittail_content_width()
     $GLOBALS['content_width'] = apply_filters('visittail_content_width', 640);
 }
 
-add_action('after_setup_theme', 'visittail_content_width', 0);
+//add_action('after_setup_theme', 'visittail_content_width', 0);
 
 /**
  * Register widget area.
@@ -206,7 +206,7 @@ function visittail_widgets_init()
     );
 }
 
-add_action('widgets_init', 'visittail_widgets_init');
+//add_action('widgets_init', 'visittail_widgets_init');
 
 /**
  * Enqueue scripts and styles.
@@ -223,4 +223,4 @@ function visittail_scripts()
     }
 }
 
-add_action('wp_enqueue_scripts', 'visittail_scripts');
+//add_action('wp_enqueue_scripts', 'visittail_scripts');

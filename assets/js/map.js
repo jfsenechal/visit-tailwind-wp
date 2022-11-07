@@ -1,5 +1,5 @@
 
-import oljf2 from "./dist/js/oljf.js";
+import oljf2 from "./dist/js/appOl-jf";
 
 document.addEventListener('alpine:init', () => {
 

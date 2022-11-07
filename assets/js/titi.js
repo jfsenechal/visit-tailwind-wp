@@ -1,4 +1,4 @@
 
-import oljf from './dist/js/oljf.js';
+import oljf from './dist/js/appOl-jf';
 
 window.oljf = oljf
