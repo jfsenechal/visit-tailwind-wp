@@ -4,6 +4,7 @@ import OSM from 'ol/source/OSM.js';
 import View from 'ol/View.js';
 import {fromLonLat} from "ol/proj";
 import Point from "ol/geom/Point";
+import GPX from 'ol/format/GPX';
 import TileJSON from "ol/source/TileJSON";
 import Feature from "ol/Feature";
 import {Icon, Style} from "ol/style";
@@ -36,13 +37,23 @@ const vectorLayer = new VectorLayer({
     source: vectorSource
 });
 
+const vectorGpx = new VectorLayer({
+    source: new VectorSource({
+        url: '/wp-content/uploads/2021/04/VTTVert.gpx',
+        format: new GPX(),
+    }),
+    style: function (feature) {
+        return style[feature.getGeometry().getType()];
+    },
+});
+
 const mapjf = new Map({
     target: 'openmap_offre',
     layers: [
         new TileLayer({
             source: new OSM(),
         }),
-        vectorLayer
+        vectorGpx
     ],
     view: new View({
         center: fromLonLat([latitude, longitude]),
