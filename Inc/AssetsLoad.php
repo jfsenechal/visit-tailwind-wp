@@ -7,6 +7,9 @@ class AssetsLoad
     public function __construct()
     {
         add_action('wp_enqueue_scripts', fn() => $this->visitmarcheAssets());
+        if (!is_category() && !is_search() && !is_front_page()) {
+            add_action('wp_enqueue_scripts', fn() => $this->visitmarcheLeaft());
+        }
         add_filter('script_loader_tag', fn($tag, $handle, $src) => $this->addAsModule($tag, $handle, $src), 10, 3);
         add_filter('script_loader_tag', fn($tag, $handle, $src) => $this->addDefer($tag, $handle, $src), 10, 3);
     }
@@ -73,6 +76,23 @@ class AssetsLoad
 
     }
 
+    public function visitmarcheLeaft(): void
+    {
+        wp_enqueue_style(
+            'visitmarche-leaflet',
+            'https://unpkg.com/leaflet@latest/dist/leaflet.css',
+            [],
+            null
+        );
+        wp_enqueue_script(
+            'visitmarche-leaflet-js',
+            'https://unpkg.com/leaflet@latest/dist/leaflet.js',
+            [],
+            null
+
+        );
+    }
+
     /**
      * Pour vue
      * @param $tag
@@ -91,7 +111,7 @@ class AssetsLoad
 
     function addDefer($tag, $handle, $src)
     {
-        if (!in_array($handle, ['alpine-js', 'menuMobile-js','searchXl-js','refreshOffres-js'])) {
+        if (!in_array($handle, ['alpine-js', 'menuMobile-js','searchXl-js','refreshOffres-js','visi45tmarche-leaflet-js'])) {
             return $tag;
         }
 
