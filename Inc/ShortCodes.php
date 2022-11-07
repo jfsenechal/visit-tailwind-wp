@@ -49,7 +49,7 @@ class ShortCodes
         $title = $post ? $post->post_title : '';
 
         return $twig->render(
-            'map/_gpx_viewer.html.twig',
+            '@VisitTail/map/_gpx_viewer.html.twig',
             [
                 'title' => $title,
                 'latitude' => 50.2268,

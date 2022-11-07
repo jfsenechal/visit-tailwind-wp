@@ -6,7 +6,6 @@ use VisitMarche\ThemeTail\Inc\AdminPage;
 use VisitMarche\ThemeTail\Inc\Ajax;
 use VisitMarche\ThemeTail\Inc\ApiRoutes;
 use VisitMarche\ThemeTail\Inc\AssetsLoad;
-use VisitMarche\ThemeTail\Inc\CategoryMetaBox;
 use VisitMarche\ThemeTail\Inc\PivotMetaBox;
 use VisitMarche\ThemeTail\Inc\SecurityConfig;
 use VisitMarche\ThemeTail\Inc\Seo;
@@ -17,7 +16,7 @@ use VisitMarche\ThemeTail\Lib\RouterPivot;
 /**
  * Initialisation du thème
  */
-//new SetupTheme();
+new SetupTheme();
 /**
  * Chargement css, js
  */
@@ -38,24 +37,20 @@ new RouterPivot();
  * Pour enregistrer filtres pivot
  */
 new PivotMetaBox();
-/*
- * Meta data pivot
- */
-//new CategoryMetaBox();
 /**
  * Balises pour le référencement
  */
-//new Seo();
+new Seo();
 /**
  * Gpx viewer
  */
-//new ShortCodes();
+new ShortCodes();
 /**
  * Admin pages
  */
-//new AdminPage();
+new AdminPage();
 /**
  * Ajax for admin
  */
-//new Ajax();
+new Ajax();
 

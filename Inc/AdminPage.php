@@ -25,7 +25,7 @@ class AdminPage
             'edit_posts',
             'pivot_home',
             fn() => $this::homepageRender(),
-            get_template_directory_uri().'/assets/images/Icone_Pivot_Small.png'
+            get_template_directory_uri().'/assets/tartine/Icone_Pivot_Small.png'
         );
         add_submenu_page(
             'pivot_home',
@@ -43,20 +43,12 @@ class AdminPage
             'pivot_categories_filtre',
             fn() => $this::categoriesFiltresRender(),
         );
-        add_submenu_page(
-            'pivot_home',
-            'Vue',
-            'Vue',
-            'edit_posts',
-            'pivot_vue',
-            fn() => $this::vueRender(),
-        );
     }
 
     private static function homepageRender()
     {
         Twig::rendPage(
-            'admin/home.html.twig',
+            '@VisitTail/admin/home.html.twig',
             [
 
             ]
@@ -74,7 +66,7 @@ class AdminPage
         $urlAdmin = admin_url('admin.php?page=pivot_offres&filtreId=');
 
         Twig::rendPage(
-            'admin/filtres_list.html.twig',
+            '@VisitTail/admin/filtres_list.html.twig',
             [
                 'filters' => $filters,
                 'urlAdmin' => $urlAdmin,
@@ -88,7 +80,7 @@ class AdminPage
         $filtre = $_GET['filtreId'] ?? null;
         if (!$filtre) {
             Twig::rendPage(
-                'admin/error.html.twig',
+                '@VisitTail/admin/error.html.twig',
                 [
                     'message' => 'Choisissez un filtre dans le menu',
                 ]
@@ -101,7 +93,7 @@ class AdminPage
         $filtres = $filtreRepository->findByIdsOrUrns([$filtre]);
         if (count($filtres) == 0) {
             Twig::rendPage(
-                'admin/error.html.twig',
+                '@VisitTail/admin/error.html.twig',
                 [
                     'message' => 'Le filtre n\'a pas été trouvé dans la base de donnée',
                 ]
@@ -129,7 +121,7 @@ class AdminPage
         $codeCgt = $_GET['codeCgt'] ?? null;
         if (!$codeCgt) {
             Twig::rendPage(
-                'admin/error.html.twig',
+                '@VisitTail/admin/error.html.twig',
                 [
                     'message' => 'Choisissez une offre dans la liste par filtre',
                 ]
@@ -141,7 +133,7 @@ class AdminPage
         $offre = $pivotRepository->getOffreByCgtAndParse($codeCgt, Offre::class);
         if (!$offre) {
             Twig::rendPage(
-                'admin/error.html.twig',
+                '@VisitTail/admin/error.html.twig',
                 [
                     'message' => 'Offre non trouvée',
                 ]
@@ -150,7 +142,7 @@ class AdminPage
             return;
         }
         Twig::rendPage(
-            'admin/offre.html.twig',
+            '@VisitTail/admin/offre.html.twig',
             [
                 'offre' => $offre,
             ]
@@ -183,30 +175,5 @@ class AdminPage
             ?>
         </div>
         <?php
-    }
-
-    private function vueRender()
-    {
-        wp_enqueue_script(
-            'vue-app',
-            get_template_directory_uri().'/assets/js/dist/js/vuejf.js',
-            [],
-            wp_get_theme()->get('Version'),
-            true
-        );
-
-        wp_enqueue_style(
-            'vue-css',
-            get_template_directory_uri().'/assets/js/dist/js/vuejf.css',
-            [],
-            wp_get_theme()->get('Version')
-        );
-
-        Twig::rendPage(
-            'admin/vue.html.twig',
-            [
-                'categoryId' => 10,
-            ]
-        );
     }
 }
