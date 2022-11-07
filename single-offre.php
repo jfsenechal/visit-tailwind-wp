@@ -15,32 +15,21 @@ get_header();
 
 $codeCgt = get_query_var(RouterPivot::PARAM_OFFRE);
 
-$currentCategory = get_category_by_slug(get_query_var('category_name'));
-$urlBack = get_category_link($currentCategory);
-
 $pivotRepository = PivotContainer::getPivotRepository(WP_DEBUG);
 
-$offre = null;
+try {
+    $offre = $pivotRepository->getOffreByCgtAndParse($codeCgt, Offre::class);
+} catch (Exception $e) {
+    Twig::rendPage(
+        '@VisitTail/errors/500.html.twig',
+        [
+            'title' => 'Error',
+            'message' => 'Impossible de charger l\'offre: '.$e->getMessage(),
+        ]
+    );
+    get_footer();
 
-if (!str_contains($codeCgt, "-")) {
-    $offre = $pivotRepository->getOffreByIdHades($codeCgt);
-}
-
-if (!$offre) {
-    try {
-        $offre = $pivotRepository->getOffreByCgtAndParse($codeCgt, Offre::class);
-    } catch (Exception $e) {
-        Twig::rendPage(
-            '@VisitTail/errors/500.html.twig',
-            [
-                'title' => 'Error',
-                'message' => 'Impossible de charger l\'offre: '.$e->getMessage(),
-            ]
-        );
-        get_footer();
-
-        return;
-    }
+    return;
 }
 
 if (null === $offre) {
@@ -57,6 +46,8 @@ if (null === $offre) {
     return;
 }
 
+$currentCategory = get_category_by_slug(get_query_var('category_name'));
+$urlBack = get_category_link($currentCategory);
 $language = LocaleHelper::getSelectedLanguage();
 $categoryOffres = get_category_by_slug('offres');
 $urlCat = get_category_link($categoryOffres);
@@ -80,7 +71,7 @@ if (count($offre->gpxs) > 0) {
     $gpxViewer = new GpxViewer();
     $gpxMap = $gpxViewer->render($offre->gpxs[0]);
 }
-
+//dd($offre);
 Twig::rendPage(
     '@VisitTail/offre.html.twig',
     [
