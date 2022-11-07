@@ -38,8 +38,8 @@ Twig::rendPage(
         'tags' => $tags,
         'image' => $image,
         'recommandations' => $recommandations,
-        'urlBack' => $urlBack,
         'bgCat' => $bgcat,
+        'urlBack' => $urlBack,
         'nameBack' => $currentCategory->name,
         'content' => $content,
     ]

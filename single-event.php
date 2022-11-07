@@ -69,7 +69,7 @@ Twig::rendPage(
     [
         'title' => $event->nomByLanguage($language),
         'offre' => $event,
-        'excerpt' => 'ici',
+        'excerpt' => null,
         'tags' => $tags,
         'image' => $event->firstImage(),
         'recommandations' => $recommandations,
