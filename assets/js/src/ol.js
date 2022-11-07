@@ -6,37 +6,45 @@ import {fromLonLat} from "ol/proj";
 import Point from "ol/geom/Point";
 import TileJSON from "ol/source/TileJSON";
 import Feature from "ol/Feature";
+import {Icon, Style} from "ol/style";
 import {Tile as TileLayer, Vector as VectorLayer} from "ol/layer";
 import VectorSource from "ol/source/Vector";
-import Alpine from 'alpinejs'
 
-export default function oljf2() {
-    let longitude = 50.226484;
-    let latitude = 5.342961;
+const mapdiv = document.getElementById('openmap_offre')
+let longitude = mapdiv.dataset.longitude;
+let latitude = mapdiv.dataset.latitude;
 
-    const rome = new Feature({
-        geometry: new Point(fromLonLat([latitude, longitude]))
-    });
+const rome = new Feature({
+    geometry: new Point(fromLonLat([latitude, longitude]))
+});
 
-    const vectorSource = new VectorSource({
-        features: [rome]
-    });
+rome.setStyle(
+    new Style({
+        image: new Icon({
+            color: "#BADA55",
+            crossOrigin: "anonymous",
+        })
+    })
+);
 
-    const vectorLayer = new VectorLayer({
-        source: vectorSource
-    });
+const vectorSource = new VectorSource({
+    features: [rome]
+});
 
-    const map = new Map({
-        target: 'openmap_offre',
-        layers: [
-            new TileLayer({
-                source: new OSM(),
-            }),
-            vectorLayer
-        ],
-        view: new View({
-            center: fromLonLat([latitude, longitude]),
-            zoom: 12
+const vectorLayer = new VectorLayer({
+    source: vectorSource
+});
+
+const mapjf = new Map({
+    target: 'openmap_offre',
+    layers: [
+        new TileLayer({
+            source: new OSM(),
         }),
-    });
-};
+        vectorLayer
+    ],
+    view: new View({
+        center: fromLonLat([latitude, longitude]),
+        zoom: 12
+    })
+});
