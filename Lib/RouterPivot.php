@@ -2,8 +2,6 @@
 
 namespace VisitMarche\ThemeTail\Lib;
 
-use AcMarche\Pivot\Entities\Category;
-use AcMarche\Pivot\Entities\Event\Event;
 use AcMarche\Pivot\Entities\Offre\Offre;
 use AcMarche\Pivot\Entity\TypeOffre;
 
@@ -32,26 +30,6 @@ class RouterPivot
         global $wp;
 
         return home_url($wp->request);
-    }
-
-    public static function getUrlEventCategory(Category $categorie): string
-    {
-        return '/'.self::EVENT_URL.$categorie->id;
-    }
-
-    public static function getUrlEvent(Event $offre, int $categoryId): string
-    {
-        return get_category_link($categoryId).self::EVENT_URL.'/'.$offre->codeCgt;
-    }
-
-    public static function setRouteEvents(array $events, int $categoryId)
-    {
-        array_map(
-            function ($event) use ($categoryId) {
-                $event->url = self::getUrlEvent($event, $categoryId);
-            },
-            $events
-        );
     }
 
     public static function getUrlOffre(Offre $offre, int $categoryId): string

@@ -3,7 +3,6 @@
 namespace VisitMarche\ThemeTail\Lib;
 
 use AcMarche\Pivot\DependencyInjection\PivotContainer;
-use AcMarche\Pivot\Entities\Event\Event;
 use AcMarche\Pivot\Entities\Offre\Offre;
 use AcMarche\Pivot\Entity\TypeOffre;
 use AcMarche\Pivot\Spec\UrnList;
@@ -400,7 +399,7 @@ class WpRepository
         return $recommandations;
     }
 
-    public function recommandationsByOffre(Offre|Event $offre, WP_Term $category, string $language): array
+    public function recommandationsByOffre(Offre $offre, WP_Term $category, string $language): array
     {
         $recommandations = [];
         if (count($offre->voir_aussis)) {
@@ -409,9 +408,6 @@ class WpRepository
             $pivotRepository = PivotContainer::getPivotRepository();
             if ($offre instanceof Offre) {
                 $offres = $pivotRepository->getSameOffres($offre);
-            }
-            if ($offre instanceof Event) {
-                $recommandations = $pivotRepository->getSameEvents($offre);
             }
         }
         foreach ($offres as $item) {
