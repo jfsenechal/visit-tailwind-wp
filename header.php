@@ -15,9 +15,6 @@ $locale = LocaleHelper::getSelectedLanguage();
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="profile" href="https://gmpg.org/xfn/11">
         <link rel="icon" type="image/png" href="<?php echo get_template_directory_uri() ?>/assets/images/favicon.png"/>
-        <!--
-        <script type="module" src="https://visit.marche.be/wp-content/themes/visittail/assets/js/map.js" defer></script>
-        -->
         <?php wp_head(); ?>
     </head>
 
