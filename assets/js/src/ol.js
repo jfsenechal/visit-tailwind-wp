@@ -23,6 +23,7 @@ rome.setStyle(
         image: new Icon({
             color: "#BADA55",
             crossOrigin: "anonymous",
+            src: "/wp-content/themes/visittail/assets/images/map-pin.svg"
         })
     })
 );
@@ -45,6 +46,6 @@ const mapjf = new Map({
     ],
     view: new View({
         center: fromLonLat([latitude, longitude]),
-        zoom: 12
+        zoom: 18
     })
 });
