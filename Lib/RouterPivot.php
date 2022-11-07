@@ -13,15 +13,12 @@ use AcMarche\Pivot\Entity\TypeOffre;
  */
 class RouterPivot
 {
-    public const PARAM_EVENT = 'codecgt';
-    public const EVENT_URL = 'manifestation';
     public const PARAM_OFFRE = 'codeoffre';
     public const OFFRE_URL = 'offre';
     public const PARAM_FILTRE = 'filtre';
 
     public function __construct()
     {
-        $this->addRouteEvent();
         $this->addRouteOffre();
     }
 
@@ -55,53 +52,6 @@ class RouterPivot
         }
 
         return $filtres;
-    }
-
-    public function addRouteEvent(): void
-    {
-        add_action(
-            'init',
-            function () {
-                $taxonomy = get_taxonomy('category');
-                $categoryBase = $taxonomy->rewrite['slug'];
-                //^= depart, $ fin string, + one or more, * zero or more, ? zero or one, () capture
-                // [^/]* => veut dire tout sauf /
-                //url parser: /category/agenda/event/866/
-                //attention si pas sous categorie
-                //https://regex101.com/r/guhLuX/1
-                //https://regex101.com/r/H8lm1w/1
-                add_rewrite_rule(
-                //'^[a-z][a-z]/'.$categoryBase.'/([\w-]+)/manifestation/(\d+)/?$',
-                    '^'.$categoryBase.'/([\w-]+)/manifestation/([a-zA-Z0-9-]+)[/]?$',
-                    'index.php?category_name=$matches[1]&'.self::PARAM_EVENT.'=$matches[2]',
-                    'top'
-                );
-            }
-        );
-        add_filter(
-            'query_vars',
-            function ($query_vars) {
-                $query_vars[] = self::PARAM_EVENT;
-
-                return $query_vars;
-            }
-        );
-        add_action(
-            'template_include',
-            function ($template) {
-                global $wp_query;
-                if (is_admin() || !$wp_query->is_main_query()) {
-                    return $template;
-                }
-
-                if (false === get_query_var(self::PARAM_EVENT) ||
-                    '' === get_query_var(self::PARAM_EVENT)) {
-                    return $template;
-                }
-
-                return get_template_directory().'/single-event.php';
-            }
-        );
     }
 
     public function addRouteOffre(): void
