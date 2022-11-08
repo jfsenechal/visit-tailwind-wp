@@ -5,7 +5,6 @@ import View from 'ol/View.js';
 import {fromLonLat} from "ol/proj";
 import Point from "ol/geom/Point";
 import GPX from 'ol/format/GPX';
-import TileJSON from "ol/source/TileJSON";
 import Feature from "ol/Feature";
 import {Icon, Style} from "ol/style";
 import {Tile as TileLayer, Vector as VectorLayer} from "ol/layer";
@@ -39,7 +38,7 @@ const vectorLayer = new VectorLayer({
 
 const vectorGpx = new VectorLayer({
     source: new VectorSource({
-        url: '/wp-content/uploads/2021/04/VTTVert.gpx',
+        url: '/images/fells_loop.gpx',
         format: new GPX(),
     }),
     style: function (feature) {
@@ -53,7 +52,7 @@ const mapjf = new Map({
         new TileLayer({
             source: new OSM(),
         }),
-        vectorGpx
+        vectorLayer
     ],
     view: new View({
         center: fromLonLat([latitude, longitude]),
