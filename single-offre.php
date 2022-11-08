@@ -11,15 +11,13 @@ use VisitMarche\ThemeTail\Lib\RouterPivot;
 use VisitMarche\ThemeTail\Lib\Twig;
 use VisitMarche\ThemeTail\Lib\WpRepository;
 
-get_header();
-
 $codeCgt = get_query_var(RouterPivot::PARAM_OFFRE);
-
 $pivotRepository = PivotContainer::getPivotRepository(WP_DEBUG);
 
 try {
     $offre = $pivotRepository->getOffreByCgtAndParse($codeCgt, Offre::class);
 } catch (Exception $e) {
+    get_header();
     Twig::rendPage(
         '@VisitTail/errors/500.html.twig',
         [
@@ -33,6 +31,7 @@ try {
 }
 
 if (null === $offre) {
+    get_header();
     Twig::rendPage(
         '@VisitTail/errors/404.html.twig',
         [
@@ -46,6 +45,14 @@ if (null === $offre) {
     return;
 }
 
+$latitude = $offre->getAdresse()->latitude ?? null;
+$longitude = $offre->getAdresse()->longitude ?? null;
+if ($latitude && $longitude) {
+    wp_enqueue_style('visitmarche-leaflet-css');
+    wp_enqueue_script('visitmarche-leaflet-js');
+}
+
+get_header();
 $currentCategory = get_category_by_slug(get_query_var('category_name'));
 $urlcurrentCategory = get_category_link($currentCategory);
 $language = LocaleHelper::getSelectedLanguage();
@@ -76,8 +83,8 @@ Twig::rendPage(
     [
         'offre' => $offre,
         'title' => $offre->nomByLanguage($language),
-        'latitude' => $offre->getAdresse()->latitude ?? null,
-        'longitude' => $offre->getAdresse()->longitude ?? null,
+        'latitude' => $latitude,
+        'longitude' => $longitude,
         'excerpt' => null,
         'tags' => $tags,
         'image' => $offre->firstImage(),

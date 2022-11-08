@@ -86,13 +86,13 @@ class AssetsLoad
 
     public function visitmarcheLeaft(): void
     {
-        wp_enqueue_style(
+        wp_register_style(
             'visitmarche-leaflet-css',
             'https://unpkg.com/leaflet@latest/dist/leaflet.css',
             [],
             null
         );
-        wp_enqueue_script(
+        wp_register_script(
             'visitmarche-leaflet-js',
             'https://unpkg.com/leaflet@latest/dist/leaflet.js',
             [],
