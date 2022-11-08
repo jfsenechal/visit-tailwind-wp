@@ -37,14 +37,16 @@ $recommandations = [];
 
 Twig::rendPage(
     '@VisitTail/article.html.twig',
-    [
-        'title' => $post->post_title,
+    [  'title' => $post->post_title,
         'post' => $post,
         'excerpt' => $post->post_excerpt,
         'tags' => $tags,
         'image' => $image,
+        'icone' => null,
         'recommandations' => $recommandations,
+        'bgCat' => '',
         'urlBack' => '/',
+        'categoryName' => '',
         'nameBack' => 'Home',
         'content' => $content,
     ]

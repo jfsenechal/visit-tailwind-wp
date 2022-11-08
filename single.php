@@ -37,6 +37,7 @@ Twig::rendPage(
         'excerpt' => $post->post_excerpt,
         'tags' => $tags,
         'image' => $image,
+        'icone' => null,
         'recommandations' => $recommandations,
         'bgCat' => $bgcat,
         'urlBack' => $urlBack,

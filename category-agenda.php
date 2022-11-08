@@ -66,6 +66,7 @@ Twig::rendPage(
         'nameBack' => $nameBack,
         'categoryName' => $categorName,
         'image' => $image,
+        'icone' => null,
     ]
 );
 

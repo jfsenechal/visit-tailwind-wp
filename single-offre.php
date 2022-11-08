@@ -81,6 +81,7 @@ Twig::rendPage(
         'excerpt' => null,
         'tags' => $tags,
         'image' => $offre->firstImage(),
+        'icone' => null,
         'recommandations' => $recommandations,
         'urlBack' => $urlcurrentCategory,
         'categoryName' => $currentCategory->name,
