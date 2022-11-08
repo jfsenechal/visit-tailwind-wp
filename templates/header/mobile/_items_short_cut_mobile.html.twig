@@ -3,10 +3,10 @@
             class="w-max p-2 pb-6 bg-white flex flex-col items-start justify-center transition-all duration-700"
     >
         <li>
-            <a href="/" class="leading-8 text-cta-dark">Agenda</a>
+            <a href="{{ items.agenda.url }}" class="leading-8 text-cta-dark">{{ items.agenda.name }}</a>
         </li>
         <li>
-            <a href="/" class="leading-8 text-cta-dark">Inspiration</a>
+            <a href="{{ items.inspirations.name }}" class="leading-8 text-cta-dark">{{ items.inspirations.name }}</a>
         </li>
     </ul>
     <div class="z-10 absolute -bottom-[0.5rem] right-4 h-6 w-6 rotate-45 bg-white"></div>
