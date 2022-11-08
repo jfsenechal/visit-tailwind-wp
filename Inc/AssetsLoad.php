@@ -46,6 +46,14 @@ class AssetsLoad
         );
 
         wp_enqueue_script(
+            'share-js',
+            get_template_directory_uri().'/assets/js/alpine/share.js',
+            [],
+            false,
+            false
+        );
+
+        wp_enqueue_script(
             'alpine-js',
             '//unpkg.com/alpinejs',
             [],
@@ -110,7 +118,7 @@ class AssetsLoad
 
     function addDefer($tag, $handle, $src)
     {
-        if (!in_array($handle, ['alpine-js', 'menuMobile-js','searchXl-js','refreshOffres-js','visitmarche-leaflet-js'])) {
+        if (!in_array($handle, ['alpine-js', 'menuMobile-js', 'searchXl-js', 'refreshOffres-js', 'share-js'])) {
             return $tag;
         }
 
