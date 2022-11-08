@@ -1,9 +1,13 @@
 {% if excerpt %}
     <div class="{{ bgCat ?? 'bg-party' }} w-full">
-        <div class="relative flex pt-6 px-6 py-12 xl:pb-20 lg:p-12 flex-wrap z-10 justify-end lg:justify-start mx-auto">
-            <p class="text-lg xl:text-2xl text-white px-0">
-                {{ excerpt }}
-            </p>
+        <div class="relative flex flex-col p-4 xl:flex-row flex-wrap z-10 xl:h-36 items-center xl:justify-center mx-auto">
+      <span class="text-lg xl:text-xl text-caractere font-montserrat-semi-bold">
+          {{ excerpt }}
+      </span>
+            {% if icone %}
+                <img src="{{ icone }}" alt=""
+                     class="h-40 xl:absolute xl:top-0 xl:bottom-0 xl:right-12 xl:h-52 ">
+            {% endif %}
         </div>
     </div>
 {% endif %}
