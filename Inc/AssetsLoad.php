@@ -78,13 +78,13 @@ class AssetsLoad
 
     public function visitmarcheLeaft(): void
     {
-        wp_register_style(
+        wp_enqueue_style(
             'visitmarche-leaflet-css',
             'https://unpkg.com/leaflet@latest/dist/leaflet.css',
             [],
             null
         );
-        wp_register_script(
+        wp_enqueue_script(
             'visitmarche-leaflet-js',
             'https://unpkg.com/leaflet@latest/dist/leaflet.js',
             [],
@@ -110,7 +110,7 @@ class AssetsLoad
 
     function addDefer($tag, $handle, $src)
     {
-        if (!in_array($handle, ['alpine-js', 'menuMobile-js','searchXl-js','refreshOffres-js','visi45tmarche-leaflet-js'])) {
+        if (!in_array($handle, ['alpine-js', 'menuMobile-js','searchXl-js','refreshOffres-js','visitmarche-leaflet-js'])) {
             return $tag;
         }
 

@@ -73,22 +73,15 @@ if (count($offre->gpxs) > 0) {
     $gpxMap = $gpxViewer->render($offre->gpxs[0]);
 }
 
-$latitude = $offre->getAdresse()->latitude ?? null;
-$longitude = $offre->getAdresse()->longitude ?? null;
-
-if ($latitude && $longitude) {
-    wp_enqueue_script('visitmarche-leaflet-css');
-    wp_enqueue_script('visitmarche-leaflet-js');
-}
 //dd($offre);
 Twig::rendPage(
     '@VisitTail/offre.html.twig',
     [
         'offre' => $offre,
         'title' => $offre->nomByLanguage($language),
-        'latitude' => $latitude,
-        'longitude' => $longitude,
-        'excerpt' => 'ici',
+        'latitude' => $offre->getAdresse()->latitude ?? null,
+        'longitude' => $offre->getAdresse()->longitude ?? null,
+        'excerpt' => null,
         'tags' => $tags,
         'image' => $offre->firstImage(),
         'recommandations' => $recommandations,
