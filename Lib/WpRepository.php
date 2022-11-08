@@ -399,24 +399,32 @@ class WpRepository
         return $recommandations;
     }
 
-    public function recommandationsByOffre(Offre $offre, WP_Term $category, string $language): array
+    public function recommandationsByOffre(Offre $offerRefer, WP_Term $category, string $language): array
     {
         $recommandations = [];
-        if (count($offre->voir_aussis)) {
-            $offres = $offre->voir_aussis;
+        if (count($offerRefer->voir_aussis)) {
+            $offres = $offerRefer->voir_aussis;
         } else {
             $pivotRepository = PivotContainer::getPivotRepository();
-            $offres = $pivotRepository->getSameOffres($offre);
+            $offres = $pivotRepository->getSameOffres($offerRefer);
         }
-        foreach ($offres as $item) {
-            $url = RouterPivot::getUrlOffre($item, $category->cat_ID);
-            $tags2 = [$item->typeOffre->labelByLanguage($language)];
+        $urlCat = get_category_link($category);
+        foreach ($offres as $offre) {
+            $url = RouterPivot::getUrlOffre($offre, $category->cat_ID);
+            $tags[] = [];
+            foreach ($offre->categories as $categoryItem) {
+                $tags[] = [
+                    'name' => $categoryItem->labelByLanguage($language),
+                    'url' => $urlCat.'?'.RouterPivot::PARAM_FILTRE.'='.$category->urn,
+                ];
+            }
 
             $recommandations[] = [
-                'title' => $item->nomByLanguage($language),
+                'title' => $offre->nomByLanguage($language),
                 'url' => $url,
-                'image' => $item->firstImage(),
-                'categories' => $tags2,
+                'excerpt' => '',
+                'image' => $offre->firstImage(),
+                'tags' => $tags,
             ];
         }
 
