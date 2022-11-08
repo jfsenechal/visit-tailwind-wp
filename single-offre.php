@@ -61,6 +61,7 @@ foreach ($offre->categories as $category) {
 
 $wpRepository = new WpRepository();
 $recommandations = $wpRepository->recommandationsByOffre($offre, $currentCategory, $language);
+$recommandations = array_slice($recommandations, 0, 3);
 
 foreach ($offre->pois as $poi) {
     $poi->url = RouterPivot::getUrlOffre($poi, $currentCategory->cat_ID);

@@ -406,9 +406,7 @@ class WpRepository
             $offres = $offre->voir_aussis;
         } else {
             $pivotRepository = PivotContainer::getPivotRepository();
-            if ($offre instanceof Offre) {
-                $offres = $pivotRepository->getSameOffres($offre);
-            }
+            $offres = $pivotRepository->getSameOffres($offre);
         }
         foreach ($offres as $item) {
             $url = RouterPivot::getUrlOffre($item, $category->cat_ID);
