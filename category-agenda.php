@@ -18,9 +18,19 @@ $pivotRepository = PivotContainer::getPivotRepository(WP_DEBUG);
 
 $wpRepository = new WpRepository();
 $image = $wpRepository->categoryImage($category);
-
+$filterSelected = $_GET[RouterPivot::PARAM_FILTRE] ?? null;
+$nameBack = 'Home';
+$categorName = $category->name;
+if ($filterSelected) {
+    $typeOffreRepository = PivotContainer::getTypeOffreRepository(WP_DEBUG);
+    $filtres = $typeOffreRepository->findByUrn($filterSelected);
+    if ([] !== $filtres) {
+        $nameBack = 'Agenda';
+        $categorName = $category->name.' - '.$filtres[0]->labelByLanguage($language);
+    }
+}
 try {
-    $events = $pivotRepository->getEvents(true);
+    $events = $pivotRepository->getEvents(true, [$filterSelected]);
     array_map(
         function ($event) use ($cat_ID, $language) {
             $event->url = RouterPivot::getUrlOffre($event, $cat_ID);
@@ -53,7 +63,9 @@ Twig::rendPage(
         'events' => $events,
         'category' => $category,
         'title' => $category->name,
-        'image' => $image
+        'nameBack' => $nameBack,
+        'categoryName' => $categorName,
+        'image' => $image,
     ]
 );
 

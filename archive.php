@@ -46,8 +46,18 @@ $bgcat = $wpRepository->categoryBgColor($category);
 $image = $wpRepository->categoryImage($category);
 
 $children = $wpRepository->getChildrenOfCategory($category->cat_ID);
-$filtres = $wpRepository->getCategoryFilters($cat_ID);
 $offres = [];
+
+$filterSelected = $_GET[RouterPivot::PARAM_FILTRE] ?? null;
+if ($filterSelected) {
+    $typeOffreRepository = PivotContainer::getTypeOffreRepository(WP_DEBUG);
+    $filtres = $typeOffreRepository->findByUrn($filterSelected);
+    if ([] !== $filtres) {
+        $filtres = [$filtres[0]];
+    }
+} else {
+    $filtres = $wpRepository->getCategoryFilters($cat_ID);
+}
 
 if ([] !== $filtres) {
     if (count($filtres) > 1) {
@@ -76,6 +86,7 @@ if ([] !== $filtres) {
     // $offres = array_merge($posts, $offres);
 }
 $sortLink = SortLink::linkSortArticles($cat_ID);
+
 Twig::rendPage(
     '@VisitTail/category.html.twig',
     [
@@ -89,6 +100,7 @@ Twig::rendPage(
         'children' => $children,
         'filtres' => $filtres,
         'nameBack' => $nameBack,
+        'categoryName' => $categoryName,
         'posts' => $posts,
         'offres' => $offres,
         'sortLink' => $sortLink,

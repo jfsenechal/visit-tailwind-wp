@@ -47,15 +47,13 @@ if (null === $offre) {
 }
 
 $currentCategory = get_category_by_slug(get_query_var('category_name'));
-$urlBack = get_category_link($currentCategory);
+$urlcurrentCategory = get_category_link($currentCategory);
 $language = LocaleHelper::getSelectedLanguage();
-$categoryOffres = get_category_by_slug('offres');
-$urlCat = get_category_link($categoryOffres);
 $tags = [];
 foreach ($offre->categories as $category) {
     $tags[] = [
         'name' => $category->labelByLanguage($language),
-        'url' => $urlCat.'?'.RouterPivot::PARAM_FILTRE.'='.$category->urn,
+        'url' => $urlcurrentCategory.'?'.RouterPivot::PARAM_FILTRE.'='.$category->urn,
     ];
 }
 
@@ -73,7 +71,6 @@ if (count($offre->gpxs) > 0) {
     $gpxMap = $gpxViewer->render($offre->gpxs[0]);
 }
 
-//dd($offre);
 Twig::rendPage(
     '@VisitTail/offre.html.twig',
     [
@@ -85,7 +82,8 @@ Twig::rendPage(
         'tags' => $tags,
         'image' => $offre->firstImage(),
         'recommandations' => $recommandations,
-        'urlBack' => $urlBack,
+        'urlBack' => $urlcurrentCategory,
+        'categoryName' => $currentCategory->name,
         'nameBack' => $currentCategory->name,
     ]
 );

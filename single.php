@@ -2,7 +2,6 @@
 
 namespace VisitMarche\ThemeTail;
 
-use VisitMarche\ThemeTail\Lib\LocaleHelper;
 use VisitMarche\ThemeTail\Lib\PostUtils;
 use VisitMarche\ThemeTail\Lib\Twig;
 use VisitMarche\ThemeTail\Lib\WpRepository;
@@ -11,7 +10,6 @@ get_header();
 
 global $post;
 
-$language = LocaleHelper::getSelectedLanguage();
 $wpRepository = new WpRepository();
 
 $slugs = explode('/', get_query_var('category_name'));
@@ -29,6 +27,8 @@ $content = get_the_content(null, null, $post);
 $content = apply_filters('the_content', $content);
 $content = str_replace(']]>', ']]&gt;', $content);
 
+$nameBack = $currentCategory->name;
+
 Twig::rendPage(
     '@VisitTail/article.html.twig',
     [
@@ -40,7 +40,8 @@ Twig::rendPage(
         'recommandations' => $recommandations,
         'bgCat' => $bgcat,
         'urlBack' => $urlBack,
-        'nameBack' => $currentCategory->name,
+        'categoryName' => $currentCategory->name,
+        'nameBack' => $nameBack,
         'content' => $content,
     ]
 );
