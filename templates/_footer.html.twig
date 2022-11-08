@@ -16,16 +16,16 @@
         <h4 class="font-montserrat-semi-bold">Menu</h4>
         <ul class="grid grid-cols-2 p-2 text-sm leading-6 xl:grid-cols-1">
             <li class="px-2">
-                <a href="https://visitmarche.be/fr/categorie/inspirations/">Inspirations</a>
+                <a href="{{ items.inspirations.url }}">{{ items.inspirations.name }}</a>
             </li>
             <li class="px-2">
-                <a href="https://visitmarche.be/fr/categorie/sorganiser/">S'organiser</a>
+                <a href="{{ items.sorganiser.name }}">{{ items.sorganiser.name }}</a>
             </li>
             <li class="px-2">
-                <a href="https://visitmarche.be/fr/categorie/agenda/">Agenda</a>
+                <a href="{{ items.agenda.url }}">{{ items.agenda.name }}</a>
             </li>
             <li class="px-2">
-                <a href="https://visitmarche.be/fr/categorie/pratique/">Pratique</a>
+                <a href="{{ items.pratique.url }}">{{ items.pratique.name }}</a>
             </li>
         </ul>
     </div>
