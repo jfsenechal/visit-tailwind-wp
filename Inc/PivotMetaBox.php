@@ -30,14 +30,14 @@ class PivotMetaBox
     {
         wp_enqueue_script(
             'vue-admin-js',
-            get_template_directory_uri().'/assets/js/dist/js/appFiltreAdmin-vuejf.js',
+            get_template_directory_uri().'/assets/js/dist/js/appFiltreAdmin-jf.js',
             [],
             wp_get_theme()->get('Version'),
             true
         );
         wp_enqueue_style(
             'vue-admin-css',
-            get_template_directory_uri().'/assets/js/dist/js/admin-jf.css',
+            get_template_directory_uri().'/assets/js/dist/css/admin-jf.css',
             [],
             wp_get_theme()->get('Version'),
         );
